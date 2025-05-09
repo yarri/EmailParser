@@ -1,0 +1,124 @@
+Return-Path: <superlativelyua11@google.com>
+Delivered-To: japko@listonos.cz
+Received: from localhost by kajka.plovarna.cz
+	with SpamAssassin (version 3.3.2);
+	Sun, 05 Jan 2014 06:51:34 +0100
+From: <japko@listonos.cz>,
+	<ry@listonos.cz>
+To: <japko@listonos.cz>,
+	<ry@listonos.cz>
+Subject: Nemate dostatek financnich prostredku? Nabizime Vam reseni � praci ve volnem case. 
+Date: Sun, 5 Jan 2014 00:54:56 -0500
+Message-Id: <1388901009103355404@kajka.plovarna.cz>
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on kajka.plovarna.cz
+X-Spam-Flag: YES
+X-Spam-Level: ********
+X-Spam-Status: Yes, score=8.7 required=5.0 tests=BAYES_50,HTML_MESSAGE,
+	HTML_TAG_BALANCE_BODY,MIME_HTML_ONLY,RCVD_IN_BRBL_LASTEXT,RCVD_IN_PBL,
+	RCVD_IN_XBL,RDNS_NONE,SUBJECT_NEEDS_ENCODING autolearn=no version=3.3.2
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="----------=_52C8F2E6.5168780B"
+
+This is a multi-part message in MIME format.
+
+------------=_52C8F2E6.5168780B
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+
+Spam detection software, running on the system "kajka.plovarna.cz", has
+identified this incoming email as possible spam.  The original message
+has been attached to this so you can view it (if it isn't spam) or label
+similar future email.  If you have any questions, see
+The administrator of that system for details.
+
+Content preview:  Nabízíme Vám práci externího asistenta. Tato práce
+  zabere 1-2 hodiny týdně a nevyžaduje absolutně žádné investice. Podstata
+   této práce spočívá ve zpracování objednávek klientů ve Vašem městě.
+   Tato práce není složitější, než úhrada složenek za komunální služby.
+   Za každou objednávku dostáváte od 90 do 350 euro. Výplata je každý
+   pátek! Podle Vašeho přání můžete postupně zvyšovat počet zpracovávaných
+   objednávek. [...] 
+
+Content analysis details:   (8.7 points, 5.0 required)
+
+ pts rule name              description
+---- ---------------------- --------------------------------------------------
+ 0.4 RCVD_IN_XBL            RBL: Received via a relay in Spamhaus XBL
+                            [190.42.148.233 listed in zen.spamhaus.org]
+ 3.3 RCVD_IN_PBL            RBL: Received via a relay in Spamhaus PBL
+ 1.4 RCVD_IN_BRBL_LASTEXT   RBL: RCVD_IN_BRBL_LASTEXT
+                            [190.42.148.233 listed in bb.barracudacentral.org]
+ 1.2 HTML_TAG_BALANCE_BODY  BODY: HTML has unbalanced "body" tags
+ 0.0 HTML_MESSAGE           BODY: HTML included in message
+ 0.8 BAYES_50               BODY: Bayes spam probability is 40 to 60%
+                            [score: 0.5263]
+ 0.7 MIME_HTML_ONLY         BODY: Message only has text/html MIME parts
+ 0.8 RDNS_NONE              Delivered to internal network by a host with no rDNS
+ 0.0 SUBJECT_NEEDS_ENCODING SUBJECT_NEEDS_ENCODING
+
+The original message was not completely plain text, and may be unsafe to
+open with some email clients; in particular, it may contain a virus,
+or confirm that your address can receive spam.  If you wish to view
+it, it may be safer to save it to a file and open it with an editor.
+
+
+------------=_52C8F2E6.5168780B
+Content-Type: message/rfc822; x-spam-type=original
+Content-Description: original message before SpamAssassin
+Content-Disposition: attachment
+Content-Transfer-Encoding: 8bit
+
+Received: (qmail 55411 invoked by uid 89); 5 Jan 2014 05:50:09 -0000
+X-Qmail-Scanner-Diagnostics: from 190.42.148.233 by kajka.plovarna.cz (envelope-from <superlativelyua11@google.com>, uid 89) with qmail-scanner-2.10st 
+ (clamdscan: 0.97.8/17844. mhr: 1.0. perlscan: 2.10st.  
+ Clear:RC:0(190.42.148.233):. 
+ Processed in 0.014162 secs); 05 Jan 2014 05:50:09 -0000
+Received: from unknown (HELO ?190.42.148.233?) (190.42.148.233)
+  by kajka.plovarna.cz with SMTP; 5 Jan 2014 05:50:09 -0000
+Date: Sun, 5 Jan 2014 00:54:56 -0500
+From: <japko@listonos.cz>,
+	<ry@listonos.cz>
+To: <japko@listonos.cz>,
+	<ry@listonos.cz>
+Subject: Nemate dostatek financnich prostredku? Nabizime Vam reseni � praci ve volnem case. 
+X-Mailer: whmbdlvqajf
+MIME-Version: 1.0
+Content-Type: text/html;
+	charset=unicode
+Content-Transfer-Encoding: 7bit
+Message-ID: <1388901009103355404@kajka.plovarna.cz>
+
+<HTML><HEAD>
+<META content="text/html; charset=unicode" http-equiv=Content-Type></HEAD>
+<BODY>
+<BODY>
+
+Nab&#237;z&#237;me V&#225;m pr&#225;ci extern&#237;ho asistenta.<br>
+<br>
+Tato pr&#225;ce zabere 1-2 hodiny t&#253;dn&#283; a nevy&#382;aduje absolutn&#283; &#382;&#225;dn&#233; investice. <br>
+Podstata t&#233;to pr&#225;ce spo&#269;&#237;v&#225; ve zpracov&#225;n&#237; objedn&#225;vek klient&#367; ve Va&#353;em m&#283;st&#283;.<br>
+<br>
+Tato pr&#225;ce nen&#237; slo&#382;it&#283;j&#353;&#237;, ne&#382; &#250;hrada slo&#382;enek za komun&#225;ln&#237; slu&#382;by.<br>
+<b>Za ka&#382;dou objedn&#225;vku dost&#225;v&#225;te od 90 do 350 euro.</b> V&#253;plata je ka&#382;d&#253; p&#225;tek! <br>
+Podle Va&#353;eho p&#345;&#225;n&#237; m&#367;&#382;ete postupn&#283; zvy&#353;ovat po&#269;et zpracov&#225;van&#253;ch objedn&#225;vek.<br>
+ <br>
+Zaru&#269;ujeme pr&#225;ci pro v&#353;echny z&#225;jemce. Ale po&#269;et m&#237;st je omezen! Proto napi&#353;te &#382;&#225;dost hned te&#271;.<br>
+<br>
+A za&#269;n&#283;te vyd&#283;l&#225;vat ji&#382; p&#345;&#237;&#353;t&#237; t&#253;den. <br>
+<br>
+<b>V &#382;&#225;dosti, pros&#237;m, uv&#225;d&#283;jte: </b><br>
+Va&#353;e cel&#233; jm&#233;no: <br>
+V&#225;&#353; e-mail: <br>
+M&#283;sto, v n&#283;m&#382; bydl&#237;te: <br>
+<br>
+&#381;&#225;dost ode&#353;lete na m&#367;j e-mail <b>Hinkle@risejobcz.com</b>, osobn&#283; V&#225;m odpov&#237;m do 2 pracovn&#237;ch dn&#367;.<br>
+  <br>
+S &#250;ctou, <br>
+Doktor Hinkle 
+
+
+</BODY></HTML>
+
+------------=_52C8F2E6.5168780B--
+

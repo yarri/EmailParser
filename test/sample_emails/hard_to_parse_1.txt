@@ -1,0 +1,290 @@
+Return-Path: <contact@therapiescare.my>
+X-Original-To: yarri@listonos.cz
+Delivered-To: yarri@listonos.cz
+Received: from localhost (localhost [127.0.0.1])
+	by cloudkicker.plovarna.cz (Postfix) with ESMTP id 28A271221F
+	for <yarri@listonos.cz>; Thu,  1 May 2025 20:29:20 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at cloudkicker.plovarna.cz
+Received: from cloudkicker.plovarna.cz ([127.0.0.1])
+	by localhost (cloudkicker.plovarna.cz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id S1g5H7jL5mJG for <yarri@listonos.cz>;
+	Thu,  1 May 2025 20:29:18 +0200 (CEST)
+Received: from therapiescare.my (unknown [37.123.98.46])
+	by cloudkicker.plovarna.cz (Postfix) with ESMTP id 90D9212171
+	for <yarri@listonos.cz>; Thu,  1 May 2025 20:29:18 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; s=s1; d=therapiescare.my;
+ h=Date:From:MIME-Version:To:Subject:Message-ID:List-Unsubscribe:Content-Type:Content-Transfer-Encoding; i=contact@therapiescare.my;
+ bh=RRaz0Yk5DNtFyKbDZOHCYKmOFec=;
+ b=jCP8AAuMCTAYabqo3bXNubvE0YknyloeQ1sSIfsNwGXloAQkYm2QyWoSbLvUJw+EKp0zagxx03Az
+   hELNs785cG9aHpiPRhEEcOdxlzfRas8p5/tIadTZtinwrR5ePmG822L9w1EdHY+Nw0yM7om/66t9
+   19tzea+7TmX6XbBW9y2bpZaIL8zj+N2zQUw2kO8A5LCSgqrn6c/3WGb8fBPN35e+VX4ZpuSubHg1
+   31M1OJ2kHNO21kz765aXCfmbiYyEzusd21tz9O0RLV4j6AZ/RQEemzDKumTGt++ZAYgpZDow+Hv7
+   LL87dgqzK3J7HqTHKJ+dHnyeAHd5D6fwrPBNOw==
+DomainKey-Signature: a=rsa-sha1; c=nofws; q=dns; s=s1; d=therapiescare.my;
+ b=Sa23WMAMaElBWMJ4aKJhRjQLb1nYtGi/U1C4pNarBPGvkME4QoM9A8gMGNfdHFuGFPiZT/doUHS0
+   76Ytf888vyL/byrpXVF9v6T7pxVugyEnj200ZBH1dBHHA+Z8gJ26Eq/o0iPdBynOwA+RE8St+oV9
+   29pwT6wNF8sD0kSUD+f2bkQSMjGayTllqsd68cwZpJbYkjLjlu+LTJyYoydSbs8H9aZf7sbKG9+W
+   CCn2qEW6cw2VSD4XGpfFr/9hRlpLSLxkOMHihSCfAd2MstGA6uPjNnfxaxV4syryHOaH2rmZlOuC
+   G1QbIklqTz4BMXJQFL2yiT9NhAXxaOzGqCrnEA==;
+Date: Thu, 01 May 2025 14:22:13 -0400
+From: "=?ISO-8859-1?Q?You=E2=80=99ll=20?=Love These Glasses" <contact@therapiescare.my>
+MIME-Version: 1.0
+Precedence: Normal
+To: <yarri@listonos.cz>
+Subject: =?ISO-8859-1?Q?Don=E2=80=99t=20?=Risk It: Drive Confidently After Dark
+Message-ID: <XISQpaOUbwcQzkaM7YNYcA95v3DEPP1p-JTaoXA7VfQ.kNAuoyTnAh3KrkwLKsVstwejaeP0vtLXANedph2xKk0@therapiescare.my>
+List-Unsubscribe: https://www.therapiescare.my/Viujjrlttl/Zmm4GZIVxitfKjWOaOb5sOw6NvwqWwgJrEqy9OcIkGNvT80aSVrljYvyg3cO4fUW.cH6M8aaoc4_eNxH1kLQbjUroPFHR__1shqwLxjjHG_G <contact@therapiescare.my>
+List-Unsubscribe-Post: List-Unsubscribe=One-Click
+X-User: <yarri@listonos.cz>
+X-CampaignID: 54973740
+X-ListID: G_GHjjxLwqhs1__RHFPorUjbQLk1HxNe_4coaa8M6Hc
+Content-Type: text/html; charset=ISO-8859-1
+Content-Transfer-Encoding: quoted-printable
+
+<meta charset=3D"UTF-8"><meta name=3D"viewport" content=3D"width=3Ddevice-w=
+idth, initial-scale=3D1">=0D
+=0D
+=0D
+<title></title>=0D
+=0D
+=0D
+<style type=3D"text/css">body {=0D
+=0D
+=0D
+    margin: 0;=0D
+=0D
+=0D
+    padding: 0;=0D
+=0D
+=0D
+    background-color: #fafafa;=0D
+=0D
+=0D
+    font-family: Arial, sans-serif;=0D
+=0D
+=0D
+  }=0D
+=0D
+=0D
+  .email-container {=0D
+=0D
+=0D
+    max-width: 720px;=0D
+=0D
+=0D
+    margin: 0 auto;=0D
+=0D
+=0D
+    background-color: #ffffff;=0D
+=0D
+=0D
+    border: 6px solid #cccccc;=0D
+=0D
+=0D
+    padding: 20px;=0D
+=0D
+=0D
+  }=0D
+=0D
+=0D
+  h1, h2 {=0D
+=0D
+=0D
+    text-align: center;=0D
+=0D
+=0D
+    color: #2c3e50;=0D
+=0D
+=0D
+  }=0D
+=0D
+=0D
+  p {=0D
+=0D
+=0D
+    font-size: 15px;=0D
+=0D
+=0D
+    line-height: 1.6;=0D
+=0D
+=0D
+    color: #444444;=0D
+=0D
+=0D
+  }=0D
+=0D
+=0D
+  .center {=0D
+=0D
+=0D
+    text-align: center;=0D
+=0D
+=0D
+  }=0D
+=0D
+=0D
+  .cta-button {=0D
+=0D
+=0D
+    background-color: #e67e22;=0D
+=0D
+=0D
+    color: #ffffff;=0D
+=0D
+=0D
+    font-weight: bold;=0D
+=0D
+=0D
+    padding: 14px 30px;=0D
+=0D
+=0D
+    text-decoration: none;=0D
+=0D
+=0D
+    border-radius: 5px;=0D
+=0D
+=0D
+    display: inline-block;=0D
+=0D
+=0D
+    margin-top: 20px;=0D
+=0D
+=0D
+  }=0D
+=0D
+=0D
+  .cta-button:hover {=0D
+=0D
+=0D
+    background-color: #d35400;=0D
+=0D
+=0D
+  }=0D
+=0D
+=0D
+</style>=0D
+=0D
+=0D
+<div class=3D"email-container">=0D
+=0D
+=0D
+<div class=3D"center"><a href=3D"https://www.therapiescare.my/Lnpgfsxvb/=
+xhfp21503grxsrpl/G_GHjjxLwqhs1__RHFPorUjbQLk1HxNe_4coaa8M6Hc/WUf4Oc3gyvYjlrVSa08TvNGkIcO9yqErJgwWqwvN6wOs5bOaOWjKftixVIZG4mmZ"><img alt=3D"ClearV=
+iew Logo" src=3D"https://www.therapiescare.my/Urwbebe/vrrigxk21497=
+lloq/.png" width=3D"240" /> </a></div><br />=0D
+<img src=3D"https://www.therapiescare.my/Huqcs7dbg/G_GHjjxLwqhs1__RHFPorUjbQLk1HxNe_4coaa8M6Hc/WUf4Oc3gyvYjlrVSa08TvNGkIcO9yqErJgwWqwvN6wOs5bOaOWjKftixVIZG4mmZ" >=
+=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+<h1>Drive at Night with Confidence</h1>=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+<p>Glare, reflections, and poor visibility at night can make driving stress=
+ful. That&rsquo;s why thousands of people are turning to <strong>ClearView =
+Night Vision Glasses</strong> &mdash; engineered to help you see more clear=
+ly after dark.</p>=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+<div class=3D"center"><a href=3D"https://www.therapiescare.my/Lnpgfsxvb/=
+xhfp21501grxsrpl/G_GHjjxLwqhs1__RHFPorUjbQLk1HxNe_4coaa8M6Hc/WUf4Oc3gyvYjlrVSa08TvNGkIcO9yqErJgwWqwvN6wOs5bOaOWjKftixVIZG4mmZ"><img alt=3D"ClearV=
+iew Glasses in Use" src=3D"https://www.therapiescare.my/Urwbebe/vrrigxk21=
+496lloq/.jpg" style=3D"max-width: 550px; margin: 20px 0;" wid=
+th=3D"100%" /> </a></div>=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+<h2>Clear Benefits You&rsquo;ll Notice Immediately:</h2>=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+<ul style=3D"font-size: 14px; color: #333333; padding-left: 18px;">=0D
+=0D
+=0D
+	<li>? Enhanced visibility during night driving</li>=0D
+=0D
+=0D
+	<li>? Blocks dangerous headlight glare</li>=0D
+=0D
+=0D
+	<li>? Improves contrast in low-light environments</li>=0D
+=0D
+=0D
+	<li>?? Stylish, lightweight, and comfortable to wear</li>=0D
+=0D
+=0D
+	<li>? Durable alloy frame and anti-scratch lenses</li>=0D
+=0D
+=0D
+</ul>=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+<div class=3D"center"><img alt=3D"ClearView Design" src=3D"https://=
+www.therapiescare.my/Urwbebe/vrrigxk21495lloq/.jpg" style=3D"width:=
+ 48%; max-width: 350px; margin: 10px;" /> <img alt=3D"ClearView Packaging" =
+src=3D"https://www.therapiescare.my/Urwbebe/vrrigxk21494lloq/.jpg" style=3D"width: 48%; max-width: 350px; margin: 10px;" /></div>=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+<h2 style=3D"color:#c0392b;">LIMITED OFFER: 70% OFF ENDS TODAY</h2>=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+<p class=3D"center">Take advantage of this exclusive online offer now while=
+ supplies last.</p>=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+<div class=3D"center"><a class=3D"cta-button" href=3D"https://=
+www.therapiescare.my/Lnpgfsxvb/xhfp21503grxsrpl/G_GHjjxLwqhs1__RHFPorUjbQLk1HxNe_4coaa8M6Hc/=
+WUf4Oc3gyvYjlrVSa08TvNGkIcO9yqErJgwWqwvN6wOs5bOaOWjKftixVIZG4mmZ">Get My ClearView Glasses</a><br />=0D
+=0D
+=0D
+&nbsp;</div>=0D
+=0D
+=0D
+</div>=0D
+=0D
+=0D
+=0D
+=0D
+=0D
+<div style=3D"padding: 20px; background: #f4f4f4; text-align: center; font-=
+size: 12px; color: #777;">&copy; 2025 Clearview Night Vision Glasses. All r=
+ights reserved.<br />=0D
+=0D
+=0D
+EMM, LLC, 1 East Tallwood Ave. Joliet, IL 60435<br />=0D
+=0D
+=0D
+<br />=0D
+=0D
+=0D
+<a href=3D"https://www.therapiescare.my/Viujjrlttl/Zmm4GZIVxitfKjWOaOb5sOw6NvwqWwgJrEqy9OcIkGNvT80aSVrljYvyg3cO4fUW.cH6M8aaoc4_eNxH1kLQbjUroPFHR__1shqwLxjjHG_G" style=3D"color: #2980b9;">Unsubscribe</a></d=
+iv>=0D
+=0D
+=0D
+
+
+

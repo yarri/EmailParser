@@ -1,0 +1,4 @@
+composer.lock
+vendor/*
+test/tmp/
+test/sample_emails/.ignore

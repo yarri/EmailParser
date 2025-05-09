@@ -1,0 +1,26 @@
+{
+        "name": "yarri/email-parser",
+        "type": "library",
+        "description": "Parses emails, parses them well :)",
+        "keywords": [],
+        "homepage": "https://github.com/yarri/EmailParser",
+        "license": ["MIT"],
+        "authors": [
+                {
+                        "name": "Jaromir Tomek",
+                        "homepage": "https://github.com/yarri"
+                }
+        ],
+        "require": {
+                "php": ">=5.6.0",
+                "atk14/translate": "^1.2",
+                "atk14/files": "^1.6",
+                "yarri/utf8-cleaner": "^1.1"
+        },
+        "require-dev": {
+                "atk14/tester": "*"
+        },
+        "autoload": {
+                "classmap": ["src"]
+        }
+}

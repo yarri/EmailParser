@@ -1,0 +1,21 @@
+Return-Path: <yarri@listonos.cz>
+Delivered-To: yarri@listonos.cz
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on kajka.plovarna.cz
+X-Spam-Level: 
+X-Spam-Status: No, score=-1.9 required=5.0 tests=BAYES_00,NO_RELAYS
+	autolearn=ham version=3.3.2
+Received: (qmail 4225 invoked by uid 80); 7 Oct 2013 20:00:03 -0000
+Date: 7 Oct 2013 20:00:03 -0000
+Message-ID: <20131007200003.4224.qmail@kajka.plovarna.cz>
+To: yarri@listonos.cz
+Subject: =?iso-8859-2?Q?RE=3A_Testovac=ED_zpr=E1va?= (text/plain)
+From: "Jaromir Tomek" <yarri@listonos.cz>
+X-Mailer: webmail - listonos.cz mailer, version 0.1
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: base64
+
+RO1reSB6YSB6cHLhdnUuDQoNCnphc2UgSuENCg0KRG5lOiA3LjEwLjIwMTMgMjE6NDksDQpKYXJv
+bWlyIFRvbWVrIDxqYXJvbWlyLnRvbWVrQGdtYWlsLmNvbT4gbmFwc2FsOg0KDQo+IFpkcmF27W0g
+c2ViZSBzYW1hIQ0KPg0KPiBQ+GVqaSBw+O1qZW1u6SB0ZXN0b3bhbu0uDQo+DQo+IFpkcmF27Q0K
+PiBK4SBz4W0NCj4NCj4=
+

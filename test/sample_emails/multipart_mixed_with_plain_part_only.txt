@@ -1,0 +1,41 @@
+Return-Path: <Juliehqrl@airtelbroadband.in>
+Delivered-To: info@listonos.cz
+X-Spam-Checker-Version: SpamAssassin 3.4.1 (2015-04-28) on kajka.plovarna.cz
+X-Spam-Level: ****
+X-Spam-Status: No, score=4.2 required=5.0 tests=BAYES_05,RCVD_IN_PBL,
+	RCVD_IN_XBL,RDNS_DYNAMIC autolearn=no autolearn_force=no version=3.4.1
+Received: (qmail 2624 invoked by uid 89); 1 Oct 2017 08:01:24 -0000
+X-Qmail-Scanner-Diagnostics: from abts-kk-dynamic-235.8.48.171.airtelbroadband.in by kajka.plovarna.cz (envelope-from <juliehqrl@airtelbroadband.in>, uid 89) with qmail-scanner-2.10st 
+ (clamdscan: 0.97.8/17844. mhr: 1.0. perlscan: 2.10st.  
+ Clear:RC:0(171.48.8.235):. 
+ Processed in 0.016699 secs); 01 Oct 2017 08:01:24 -0000
+Received: from abts-kk-dynamic-235.8.48.171.airtelbroadband.in (171.48.8.235)
+  by kajka.plovarna.cz with SMTP; 1 Oct 2017 08:01:24 -0000
+Received: from smtpd (localhost.localdomain [127.0.0.1])	by airtelbroadband.in
+ (Postfix) with ESMTP id 3FA33E332F82
+ for <info@listonos.cz>; Sun, 01 Oct 2017 13:31:14 +0530
+Date: Sun, 01 Oct 2017 13:31:14 +0530
+From: "Julie" <Juliehqrl@airtelbroadband.in>
+To: <info@listonos.cz>
+Message-ID: <0043813106.133920217435789825.JavaMail.root@airtelbroadband.in>
+Subject: Hi
+MIME-Version: 1.0
+Content-Type: multipart/mixed;
+	boundary="----=_Part_20025_17591492.5566899550884"
+
+------=_Part_20025_17591492.5566899550884
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+
+Hi, Sweetheart!
+
+How are you? I'm Julie, and what's your name?
+I see you like visiting this website, so do I. Chatting to each other =
+could be awesome.
+What do you think about writing me =E0 few lines some time? Don't =
+hesitate to send me a letter =96 I would be happy to hear from you!
+My email boytaulaulai1978@rambler.ru
+
+I promise you=92ll love it,
+Julie
+------=_Part_20025_17591492.5566899550884--

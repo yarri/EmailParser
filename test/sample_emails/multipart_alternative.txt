@@ -1,0 +1,55 @@
+Return-Path: <jaromir.tomek@gmail.com>
+Delivered-To: yarri@listonos.cz
+X-Spam-Checker-Version: SpamAssassin 3.3.2 (2011-06-06) on kajka.plovarna.cz
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.6 required=5.0 tests=BAYES_00,FREEMAIL_FROM,
+	HTML_MESSAGE,RCVD_IN_DNSWL_LOW autolearn=ham version=3.3.2
+Received: (qmail 977 invoked by uid 89); 7 Oct 2013 19:49:41 -0000
+X-Qmail-Scanner-Diagnostics: from mail-ee0-f45.google.com by kajka.plovarna.cz (envelope-from <jaromir.tomek@gmail.com>, uid 89) with qmail-scanner-2.10st 
+ (clamdscan: 0.97.8/17844. mhr: 1.0. perlscan: 2.10st.  
+ Clear:RC:0(74.125.83.45):. 
+ Processed in 0.015234 secs); 07 Oct 2013 19:49:41 -0000
+Received: from mail-ee0-f45.google.com (74.125.83.45)
+  by kajka.plovarna.cz with SMTP; 7 Oct 2013 19:49:41 -0000
+Received: by mail-ee0-f45.google.com with SMTP id c50so3517138eek.32
+        for <yarri@listonos.cz>; Mon, 07 Oct 2013 12:49:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20120113;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        bh=jZWbb+XQU7FCokbYbCvjgwfXb5CY7QSnF49Qp+XOq8I=;
+        b=0jgW6kmB2oZuUd/Bq5xiBFgM8ZdKotd7z1BLMmtlkFQKQlny81vhRlFoNkyg99J5gW
+         /FNIXdgX752iT27BIbc6V6LWl7GzX8TePPEtgukQP+qPNc0+t6fey0KwyMKrmHYz1HC2
+         34L57nmJrb31n9S8l4uWLNka3iVqPDjK31CS5rXqnHGpg6+DsObPNqXkSw75NdKCJWU3
+         TM2BYbyDGwcfIYPyU4ZRUzoAjBg4nAuZu7jfHVnn3emC40lEVplb14sTjJ/F8dN+Al99
+         Mau7Qi3CtIhTd1ldjtLLZmItGxGAJvyQtircsxXFT/FSCpJ1RxQJjpeg99vYlG8q5r7a
+         aGmQ==
+MIME-Version: 1.0
+X-Received: by 10.14.221.73 with SMTP id q49mr5451266eep.64.1381175380156;
+ Mon, 07 Oct 2013 12:49:40 -0700 (PDT)
+Received: by 10.14.81.67 with HTTP; Mon, 7 Oct 2013 12:49:40 -0700 (PDT)
+Date: Mon, 7 Oct 2013 21:49:40 +0200
+Message-ID: <CAMupsmTo+2CF=q-Ubz8wo2RbBpZ+9=RjAF0sxsAYVfLV8HSw7Q@mail.gmail.com>
+Subject: =?ISO-8859-1?Q?Testovac=ED_zpr=E1va?= (multipart/alternative)
+From: Jaromir Tomek <jaromir.tomek@gmail.com>
+To: yarri@listonos.cz
+Content-Type: multipart/alternative; boundary=047d7b6250a4e84f2204e82bf367
+
+--047d7b6250a4e84f2204e82bf367
+Content-Type: text/plain; charset=ISO-8859-2
+Content-Transfer-Encoding: quoted-printable
+
+Zdrav=EDm sebe sama!
+
+P=F8eji p=F8=EDjemn=E9 testov=E1n=ED.
+
+Zdrav=ED
+J=E1 s=E1m
+
+--047d7b6250a4e84f2204e82bf367
+Content-Type: text/html; charset=ISO-8859-2
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div><div>Zdrav=EDm sebe sama!<br><br>P=F8eji p=F8=EDjemn=
+=E9 testov=E1n=ED.<br><br></div>Zdrav=ED<br></div>J=E1 s=E1m<br></div>
+
+--047d7b6250a4e84f2204e82bf367--
