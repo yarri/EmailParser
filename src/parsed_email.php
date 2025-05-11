@@ -20,59 +20,8 @@ class ParsedEmail {
 	var $first_readable_text = false;
 	var $size = 0;
 
-	var $headers = array(
-		"reply_to" => "",
-		"return_path" => "",
-		"reply_to" => "",
-		"return_path" => "",
-		"from" => "",
-		"sender" => "",
-		"to" => "",
-		"cc" => "",
-		"bcc" => "",
-		"subject" => "",
-		"date" => NULL,
-		"message_id" => "",
-		"in_reply_to" => "",
-		"references" => "",
-		"list_id" => "",
-		"mailing_list" => "",
-		"x_mailinglist" => "",
-		"list_post" => "",
-		"list_help" => "",
-		"list_unsubscribe" => "",
-		"list_subscribe" => "",
-		"x_priority" => NULL,
-		"x_smile" => NULL,
-		"x_spam_status" => NULL, //"Y","N",NULL
-		"x_spamdetected" => "", //"0","1" to nastavuje centrum.cz
-	);
+	var $headers = [];
 	
-	//vytazene hlavicky, jsou nakonec spojeny odkazem do pole $this->headers
-	var $reply_to = "";
-	var $return_path = "";
-	var $from = "";
-	var $sender = "";
-	var $to = "";
-	var $cc = "";
-	var $bcc = "";
-	var $subject = "";
-	var $date = NULL;
-	var $message_id = "";
-	var $in_reply_to = "";
-	var $references = "";
-	var $list_id = "";
-	var $mailing_list = "";
-	var $x_mailinglist = "";
-	var $list_post = "";
-	var $list_help = "";
-	var $list_unsubscribe = "";
-	var $list_subscribe = "";
-	var $x_priority = NULL;
-	var $x_smile = NULL;
-	var $x_spam_status = NULL;
-	var $x_spamdetected = "";
-
 	var $received_from_host = "";
 	
 	//struktura celeho emailu, mimo hlavicek
@@ -192,110 +141,6 @@ class ParsedEmail {
 
 			$this->headers[$key] = $value;
 			continue;
-
-			//$this->headers .= "$key: ".$value;
-
-			$KEY = strtoupper($key);
-
-			if($KEY == "FROM"){
-				$this->from = trim($value);
-			}
-
-			if($KEY == "SUBJECT"){
-				$this->subject = trim($value);
-			}
-			if($KEY =="TO"){
-				$this->to = trim($value);
-			}
-			if($KEY == "CC"){
-				$this->cc = trim($value);
-			}
-			if($KEY == "BCC"){
-				$this->bcc = trim($value);
-			}
-			if($KEY == "DATE"){
-				$_temp = date("Y-m-d H:i:s",strtotime($value));
-				if($_temp){
-					$this->date = $_temp;
-				}
-			}
-
-			if($KEY == "MESSAGE-ID"){
-				$this->message_id = trim($value);
-			}
-
-			if($KEY == "REFERENCES"){
-				$this->references = trim($value);
-			}
-
-			if($KEY == "IN-REPLY-TO"){
-				$this->in_reply_to = trim($value);
-			}
-
-			if($KEY == "REPLY-TO"){
-				$this->reply_to = trim($value);
-			}
-
-			if($KEY == "RETURN-PATH"){
-				$this->return_path = trim($value);
-			}
-
-
-			if($KEY == "LIST-ID"){
-				$this->list_id = trim($value);
-			}
-			if($KEY == "MAILING-LIST"){
-				$this->mailing_list = trim($value);
-			}
-			if($KEY == "X-MAILINGLIST" || $KEY == "X-MAILING-LIST"){
-				$this->x_mailinglist = trim($value);
-			}
-
-			if($KEY == "LIST-POST"){
-				$this->list_post = trim($value);
-			}
-			if($KEY == "LIST-HELP"){
-				$this->list_help = trim($value);
-			}
-			if($KEY == "LIST-UNSUBSCRIBE"){
-				$this->list_unsubscribe = trim($value);
-			}
-			if($KEY == "LIST-SUBSCRIBE"){
-				$this->list_subscribe = trim($value);
-			}
-
-			if($KEY == "X-PRIORITY"){
-				$this->x_priority = (int) (trim($value) + 0);
-				settype($this->x_priority,"integer");
-			}
-			if($KEY == "X-SMILE"){
-				$this->x_smile = (int) (trim($value) + 0);
-				settype($this->x_smile,"integer");
-			}
-			if($KEY == "RECEIVED"){
-				if(preg_match('/^\\([^\\)]+from network\\);[^;]+from[^;]*?\\(([0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3})\\)/',trim($value),$pieces)){
-					$this->received_from_host = $pieces[1];
-					//echo $this->received_from_host;
-				}
-				//echo $value;
-				//exit;
-			}
-			if($KEY == "X-SPAM-STATUS"){
-				if(preg_match('/^yes/i',trim($value))){
-					$this->x_spam_status = "Y";
-				}elseif(preg_match('/^no/i',trim($value))){
-					$this->x_spam_status = "N";
-				}	
-			}
-
-			if($KEY == "X-SPAMDETECTED"){
-				$this->x_spamdetected = trim($value);
-				//ocekavame, ze hodnota bude 0 nebo 1
-				if(strlen($this->x_spamdetected)>1){
-					//pokud se tato hlavicka objevi ve zprave vicekrat, budeme uvazovat pouze prvni vyskyt
-					$this->x_spamdetected = $this->x_spamdetected[0];
-				}
-			}
 		}
 
 		//kraceni vsech hlavicek na 1000 znaku
@@ -336,29 +181,9 @@ class ParsedEmail {
 		$this->attachment = false;
 		$this->first_readable_text = false;
 		$this->size = 0;
-		
-		$this->headers["reply_to"] = "";
-		$this->headers["return_path"] = "";
-		$this->headers["from"] = "";
-		$this->headers["sender"] = "";
-		$this->headers["to"] = "";
-		$this->headers["cc"] = "";
-		$this->headers["bcc"] = "";
-		$this->headers["date"] = NULL;
-		$this->headers["subject"] = "";
-		$this->headers["message_id"] = "";
-		$this->headers["references"] = "";
-		$this->headers["in_reply_to"] = "";
-		$this->headers["list_id"] = "";
-		$this->headers["mailing_list"] = "";
-		$this->headers["x_mailinglist"] = "";
-		$this->headers["list_post"] = "";
-		$this->headers["list_help"] = "";
-		$this->headers["list_unsubscribe"] = "";
-		$this->headers["list_subscribe"] = "";
-		$this->headers["x_priority"] = NULL;
-		$this->headers["x_smile"] = NULL;
-		$this->headers["x_spam_status"] = NULL;
+
+
+		$this->headers = [];
 
 		$this->received_from_host = "";
 
@@ -383,9 +208,10 @@ class ParsedEmail {
 		$name = "";
 		$level = $this->level_counter;
 		$id = false;
-		$body = "";
+		$has_content = false;
+		$body = null;
 		$size = 0;
-		$content_id = "";
+		$content_id = null;
 		if($object){
 			//var_dump(array_keys(get_object_vars($structure)));
 			//var_dump($structure->headers);
@@ -393,10 +219,10 @@ class ParsedEmail {
 				$mime_type = strtolower(trim($structure->ctype_primary)."/".trim($structure->ctype_secondary));
 			}
 			if(isset($structure->ctype_parameters["name"]) && $name==""){
-				$name = correct_filename($structure->ctype_parameters["name"]);
+				$name = $this->_correctFilename($structure->ctype_parameters["name"]);
 			}
 			if(isset($structure->d_parameters["filename"]) && $name==""){
-				$name = correct_filename($structure->d_parameters["filename"]);
+				$name = $this->_correctFilename($structure->d_parameters["filename"]);
 			}
 			if(isset($structure->ctype_parameters["charset"])){
 				$charset = strtolower(trim($structure->ctype_parameters["charset"]));
@@ -407,23 +233,27 @@ class ParsedEmail {
 				$content_id = $structure->headers["content-id"];
 			}
 			
-			$_body = "";
+			$_body = null;
 			$body_included = false;
 
+			$id = $this->id_counter;
+
 			if(isset($structure->body)){
+				$has_content = true;
 				$size = strlen($structure->body);
-				$id = $this->id_counter;
 				if(!$this->first_readable_text && ($mime_type == "text/plain")){
 					$this->first_readable_text = $this->id_counter;
 					$first_readable_text_set = true;
 				}
-				if($size<10000){
+
+				// TODO: ???
+				//if($size<10000){
 					$body_included = true;
 					$_body = &$structure->body;
-				}else{
-					//telo ma cenu ukladat do cache, jenom, kdyz neni included
-					$this->bodies["$id"] = &$structure->body;
-				}
+				//}else{
+				//	//telo ma cenu ukladat do cache, jenom, kdyz neni included
+				//	$this->bodies["$id"] = &$structure->body;
+				//}
 
 				/*
 				if($mime_type == "text/plain" && $charset!="" && $charset!=DEFAULT_CHARSET){
@@ -438,8 +268,9 @@ class ParsedEmail {
 				}
 				*/
 
-				$this->id_counter++;
 			}
+
+			$this->id_counter++;
 
 			$cache_file = "";
 			if($body_included && !is_null($this->email_id)){
@@ -453,6 +284,7 @@ class ParsedEmail {
 				"content_id" => $content_id,
 				"level" => $this->level_counter,
 				"id" => $id,
+				"has_content" => $has_content,
 				"body_included" => $body_included,
 				"body" => $_body,
 				"size" => $size,
@@ -688,5 +520,31 @@ class ParsedEmail {
 			$parts[] = new ParsedEmailPart($this,$struct);
 		}
 		return $parts;
+	}
+
+	function getPartById(int $id){
+		foreach($this->getParts() as $part){
+			if($part->getId()===$id){ return $part; }
+		}
+	}
+
+	function getPartByContentId(string $content_id){
+		foreach($this->getParts() as $part){
+			if($part->getContentId()===$content_id){ return $part; }
+		}
+	}
+
+	function _correctFilename($filename){
+		$filename = trim($filename);
+		$filename = \Yarri\Utf8Cleaner::Clean($filename,"_");
+		$filename = preg_replace("/[\\/\\\\]/",'_',$filename);
+		$filename = preg_replace('/[\x00-\x1F\x7F]/','_',$filename);
+		if(strlen($filename)>100){
+			$filename = substr($filename,0,100);
+		}
+		if($filename===""){ $filename = "_"; }
+		if($filename==="."){ $filename = "_"; }
+		if($filename===".."){ $filename = "__"; }
+		return $filename;
 	}
 }
