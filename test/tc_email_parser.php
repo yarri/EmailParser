@@ -161,4 +161,18 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 
 		$this->assertEquals("Nemate dostatek financnich prostredku? Nabizime Vam reseni � praci ve volnem case.",$email->getHeader("Subject"));
 	}
+
+	function test_hard_to_parse_1(){
+		$email_content = Files::GetFileContent(__DIR__ . "/sample_emails/hard_to_parse_1.txt");
+		$parser = new Yarri\EmailParser();
+		$email = $parser->parse($email_content);
+
+		$this->assertEquals("Donâ��t Risk It: Drive Confidently After Dark",$email->getHeader("Subject"));
+	
+		$parts = $email->getParts();
+		$this->assertEquals(1,sizeof($parts));
+
+		$this->assertEquals("text/html",$parts[0]->getMimeType());
+		$this->assertStringContains(">Glare, reflections, and poor visibility at night can make driving stressful",$parts[0]->getContent());
+	}
 }
