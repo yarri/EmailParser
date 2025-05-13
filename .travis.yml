@@ -52,7 +52,7 @@ jobs:
         - sudo apt install php8.4 php8.4-mbstring
         - php -v
 
-before_install:
+before_script:
   - composer update --dev
 
 script:
