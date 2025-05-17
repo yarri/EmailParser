@@ -43,7 +43,7 @@ src=3D"cid:c1">=0A	<hr>=0A	<img src=3D"cid:c2">=0A</body>=0A</html>=0A
 
 ------=_2a746bdacbb236963dbf78814975--
 ------=_1a6e8b02d60eb33116dc8477d9dc
-Content-Type: image/png; name="dungeon-master.png"
+Content-Type: application/octed-stream; name="dungeon-master.png"
 Content-Transfer-Encoding: base64
 X-Attachment-Id: c1
 Content-ID: <c1>
@@ -252,7 +252,7 @@ XpwfL86PF+fHi/Pjxfnx4sX58eL8eHF+vDg/Xrw4P16cHy/Oj5fvVP4/IIE43o6YdnIAAAAASUVO
 RK5CYII=
 
 ------=_1a6e8b02d60eb33116dc8477d9dc
-Content-Type: image/jpeg; name="holub.jpg"
+Content-Type: application/octed-stream; name="holub.jpg"
 Content-Transfer-Encoding: base64
 X-Attachment-Id: c2
 Content-ID: <c2>

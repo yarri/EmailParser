@@ -19,6 +19,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(1,sizeof($parts));
 
 		$this->assertEquals("text/plain",$parts[0]->getMimeType());
+		$this->assertEquals("text/plain",$parts[0]->getDeclaredMimeType());
 		$this->assertEquals(1,$parts[0]->getLevel());
 		$this->assertEquals(1,$parts[0]->getId());
 		$this->assertEquals(true,$parts[0]->hasContent());
@@ -43,12 +44,14 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(3,sizeof($parts));
 
 		$this->assertEquals("multipart/alternative",$parts[0]->getMimeType());
+		$this->assertEquals("multipart/alternative",$parts[0]->getDeclaredMimeType());
 		$this->assertEquals(1,$parts[0]->getLevel());
 		$this->assertEquals(1,$parts[0]->getId());
 		$this->assertEquals(false,$parts[0]->hasContent());
 		$this->assertTrue(is_null($parts[0]->getContent()));
 
 		$this->assertEquals("text/plain",$parts[1]->getMimeType());
+		$this->assertEquals("text/plain",$parts[1]->getDeclaredMimeType());
 		$this->assertEquals(true,$parts[1]->hasContent());
 		$this->assertStringNotContains("<br>",$parts[1]->getContent());
 		$this->assertEquals(2,$parts[1]->getLevel());
@@ -56,6 +59,7 @@ class TcEmailParser extends TcBase {
 		$this->assertStringContains("Zdravím sebe sama!",$parts[1]->getContent());
 
 		$this->assertEquals("text/html",$parts[2]->getMimeType());
+		$this->assertEquals("text/html",$parts[2]->getDeclaredMimeType());
 		$this->assertEquals(true,$parts[1]->hasContent());
 		$this->assertEquals(2,$parts[2]->getLevel());
 		$this->assertEquals(3,$parts[2]->getId());
@@ -101,6 +105,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(null,$parts[3]->getFilename());
 
 		$this->assertEquals("image/png",$parts[4]->getMimeType());
+		$this->assertEquals("application/octed-stream",$parts[4]->getDeclaredMimeType());
 		$this->assertEquals(true,$parts[4]->hasContent());
 		$this->assertEquals(5,$parts[4]->getId());
 		$this->assertEquals(2,$parts[4]->getLevel());
@@ -109,6 +114,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals("c4f99bdb6a4feb3b41b1bcd56a4d7aa3",md5($parts[4]->getContent()));
 
 		$this->assertEquals("image/jpeg",$parts[5]->getMimeType());
+		$this->assertEquals("application/octed-stream",$parts[5]->getDeclaredMimeType());
 		$this->assertEquals(true,$parts[5]->hasContent());
 		$this->assertEquals(6,$parts[5]->getId());
 		$this->assertEquals(2,$parts[5]->getLevel());
@@ -152,6 +158,20 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 			"by mail-la0-f43.google.com with SMTP id n7so2016594lam.30 for <yarri@listonos.cz>; Sun, 22 Dec 2013 14:02:38 -0800 (PST)",
 			"by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)"
 		],$email->getHeader("Received",["as_array" => true]));
+	}
+
+	function test_attachment_with_special_chars(){
+		$email_content = Files::GetFileContent(__DIR__ . "/sample_emails/attachment_with_special_chars.txt");
+		$parser = new Yarri\EmailParser();
+		$email = $parser->parse($email_content);
+
+		$parts = $email->getParts();
+
+		$this->assertEquals(3,sizeof($parts));
+
+		$this->assertEquals("image/webp",$parts[2]->getMimeType());
+		$this->assertEquals("image/jpeg",$parts[2]->getDeclaredMimeType());
+		$this->assertEquals("Malé roztomilé lištičky.jpeg",$parts[2]->getFilename());
 	}
 
 	function test_spam_with_invalid_subject(){

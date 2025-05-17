@@ -203,7 +203,7 @@ class ParsedEmail {
 		$this->level_counter++;
 		$object = true;// :-) - TO JE VZDYCKU
 
-		$mime_type = "";
+		$declared_mime_type = "";
 		$charset = "";
 		$name = "";
 		$level = $this->level_counter;
@@ -216,7 +216,7 @@ class ParsedEmail {
 			//var_dump(array_keys(get_object_vars($structure)));
 			//var_dump($structure->headers);
 			if(isset($structure->ctype_primary) && isset($structure->ctype_secondary)){
-				$mime_type = strtolower(trim($structure->ctype_primary)."/".trim($structure->ctype_secondary));
+				$declared_mime_type = strtolower(trim($structure->ctype_primary)."/".trim($structure->ctype_secondary));
 			}
 			if(isset($structure->ctype_parameters["name"]) && $name==""){
 				$name = $this->_correctFilename($structure->ctype_parameters["name"]);
@@ -241,7 +241,7 @@ class ParsedEmail {
 			if(isset($structure->body)){
 				$has_content = true;
 				$size = strlen($structure->body);
-				if(!$this->first_readable_text && ($mime_type == "text/plain")){
+				if(!$this->first_readable_text && ($declared_mime_type == "text/plain")){
 					$this->first_readable_text = $this->id_counter;
 					$first_readable_text_set = true;
 				}
@@ -267,7 +267,6 @@ class ParsedEmail {
 					}	
 				}
 				*/
-
 			}
 
 			$this->id_counter++;
@@ -277,8 +276,16 @@ class ParsedEmail {
 				$cache_file = $this->_getCacheFilenameForPart($id);
 			}
 
+			$mime_type = $declared_mime_type;
+			if($declared_mime_type && !(strlen($name)===0 && strlen($_body)===0) && !(in_array($declared_mime_type,["text/plain","text/html"]) && !strlen($name))){
+				$_file = \Files::WriteToTemp($_body);
+				$mime_type = \Files::DetermineFileType($_file,["original_filename" => $name]);
+				\Files::Unlink($_file);
+			}
+
 			$this->struct[] = array(
 				"mime_type" => $mime_type,
+				"declared_mime_type" => $declared_mime_type,
 				"charset" => $charset,
 				"name" => $name,
 				"content_id" => $content_id,

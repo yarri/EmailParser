@@ -15,6 +15,10 @@ class ParsedEmailPart {
 		return $this->struct["mime_type"];
 	}
 
+	function getDeclaredMimeType(){
+		return $this->struct["declared_mime_type"];
+	}
+
 	function getLevel(){
 		return $this->struct["level"];
 	}
