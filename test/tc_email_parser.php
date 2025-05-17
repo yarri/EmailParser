@@ -25,6 +25,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(true,$parts[0]->hasContent());
 		$this->assertStringContains("Díky za zprávu.",$parts[0]->getContent());
 		$this->assertEquals("UTF-8",$parts[0]->getCharset());
+		$this->assertEquals(198,$parts[0]->getSize());
 
 		// ParsedEmailPart::getPartById()
 
@@ -50,6 +51,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(1,$parts[0]->getId());
 		$this->assertEquals(false,$parts[0]->hasContent());
 		$this->assertTrue(is_null($parts[0]->getContent()));
+		$this->assertTrue(is_null($parts[0]->getCharset()));
 
 		$this->assertEquals("text/plain",$parts[1]->getMimeType());
 		$this->assertEquals("text/plain",$parts[1]->getDeclaredMimeType());
@@ -58,6 +60,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(2,$parts[1]->getLevel());
 		$this->assertEquals(2,$parts[1]->getId());
 		$this->assertStringContains("Zdravím sebe sama!",$parts[1]->getContent());
+		$this->assertEquals("UTF-8",$parts[1]->getCharset());
 
 		$this->assertEquals("text/html",$parts[2]->getMimeType());
 		$this->assertEquals("text/html",$parts[2]->getDeclaredMimeType());
@@ -65,6 +68,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(2,$parts[2]->getLevel());
 		$this->assertEquals(3,$parts[2]->getId());
 		$this->assertStringContains("Zdravím sebe sama!<br><br>",$parts[2]->getContent());
+		$this->assertEquals("UTF-8",$parts[2]->getCharset());
 	}
 
 	function test_multipart_related(){
@@ -112,6 +116,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(2,$parts[4]->getLevel());
 		$this->assertEquals("<c1>",$parts[4]->getContentId());
 		$this->assertEquals("dungeon-master.png",$parts[4]->getFilename());
+		$this->assertEquals(11462,$parts[4]->getSize());
 		$this->assertEquals("c4f99bdb6a4feb3b41b1bcd56a4d7aa3",md5($parts[4]->getContent()));
 
 		$this->assertEquals("image/jpeg",$parts[5]->getMimeType());
@@ -121,6 +126,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(2,$parts[5]->getLevel());
 		$this->assertEquals("<c2>",$parts[5]->getContentId());
 		$this->assertEquals("holub.jpg",$parts[5]->getFilename());
+		$this->assertEquals(9123,$parts[5]->getSize());
 		$this->assertEquals("144875a232cb1d2d5abfbf75f4e52d61",md5($parts[5]->getContent()));
 
 		// ParsedEmailPart::getPartByContentId()
