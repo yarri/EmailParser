@@ -180,9 +180,9 @@ class ParsedEmail {
 		$this->level_counter++;
 		$object = true;// :-) - TO JE VZDYCKU
 
-		$declared_mime_type = "";
-		$charset = "";
-		$name = "";
+		$declared_mime_type = null;
+		$charset = null;
+		$name = null; // nazev soubodu
 		$level = $this->level_counter;
 		$id = false;
 		$has_content = false;
@@ -223,10 +223,19 @@ class ParsedEmail {
 					$first_readable_text_set = true;
 				}
 
+				$body_included = true;
+				$_body = &$structure->body;
+
+				if(preg_match('/^text\//',$declared_mime_type) && !$name){
+					if($charset){
+						$_body = \Translate::Trans($_body,$charset,"UTF-8");
+					}
+					$_body = \Yarri\Utf8Cleaner::Clean($_body);
+					$charset = "UTF-8";
+				}
+
 				// TODO: ???
 				//if($size<10000){
-					$body_included = true;
-					$_body = &$structure->body;
 				//}else{
 				//	//telo ma cenu ukladat do cache, jenom, kdyz neni included
 				//	$this->bodies["$id"] = &$structure->body;

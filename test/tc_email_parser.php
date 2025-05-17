@@ -24,6 +24,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(1,$parts[0]->getId());
 		$this->assertEquals(true,$parts[0]->hasContent());
 		$this->assertStringContains("Díky za zprávu.",$parts[0]->getContent());
+		$this->assertEquals("UTF-8",$parts[0]->getCharset());
 
 		// ParsedEmailPart::getPartById()
 
@@ -172,6 +173,23 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 		$this->assertEquals("image/webp",$parts[2]->getMimeType());
 		$this->assertEquals("image/jpeg",$parts[2]->getDeclaredMimeType());
 		$this->assertEquals("Malé roztomilé lištičky.jpeg",$parts[2]->getFilename());
+	}
+
+	function test_text_document_with_latin_2_encoding(){
+		$email_content = Files::GetFileContent(__DIR__ . "/sample_emails/text_document_with_latin_2_encoding.txt");
+
+		$parser = new Yarri\EmailParser();
+		$email = $parser->parse($email_content);
+
+		$parts = $email->getParts();
+
+		$this->assertEquals(3,sizeof($parts));
+
+		$this->assertEquals("text/plain",$parts[2]->getMimeType());
+		$this->assertEquals("iso-8859-2",$parts[2]->getCharset());
+		$this->assertEquals("text_document_latin2.txt",$parts[2]->getFilename());
+		$this->assertEquals("Příliš žluťoučký kůň úpěl ďábelské ódy v kódování Latin 2.",trim(Translate::Trans($parts[2]->getContent(),"iso-8859-2","UTF-8")));
+		$this->assertEquals(60,$parts[2]->getSize());
 	}
 
 	function test_spam_with_invalid_subject(){

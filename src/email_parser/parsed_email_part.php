@@ -40,13 +40,15 @@ class ParsedEmailPart {
 	}
 
 	function getContent(){
-		$body = $this->struct["body"];
-		if(preg_match('/text\//',$this->getMimeType()) && $this->struct["charset"]){
-			$body = \Translate::Trans($body,$this->struct["charset"],"UTF-8");
-			$body = \Yarri\Utf8Cleaner::Clean($body);
-			return $body;
-		}
-		return $body;
+		return $this->struct["body"];
+	}
+
+	function getSize(){
+		return strlen($this->getContent());
+	}
+
+	function getCharset(){
+		return $this->struct["charset"];
 	}
 
 	function toArray(){

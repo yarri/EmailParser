@@ -1,0 +1,79 @@
+Return-Path: <jaromir.tomek@gmail.com>
+X-Original-To: yarri@listonos.cz
+Delivered-To: yarri@listonos.cz
+Received: from localhost (localhost [127.0.0.1])
+	by cloudkicker.plovarna.cz (Postfix) with ESMTP id E516B2D726
+	for <yarri@listonos.cz>; Sat, 17 May 2025 22:12:53 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at cloudkicker.plovarna.cz
+Received: from cloudkicker.plovarna.cz ([127.0.0.1])
+	by localhost (cloudkicker.plovarna.cz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id nAXMeMnRyYOJ for <yarri@listonos.cz>;
+	Sat, 17 May 2025 22:12:53 +0200 (CEST)
+Received: from mail-ej1-f45.google.com (mail-ej1-f45.google.com [209.85.218.45])
+	by cloudkicker.plovarna.cz (Postfix) with ESMTPS id 6878A1015
+	for <yarri@listonos.cz>; Sat, 17 May 2025 22:12:53 +0200 (CEST)
+Received: by mail-ej1-f45.google.com with SMTP id a640c23a62f3a-ad2414a412dso550817766b.0
+        for <yarri@listonos.cz>; Sat, 17 May 2025 13:12:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1747512773; x=1748117573; darn=listonos.cz;
+        h=subject:from:to:content-language:user-agent:mime-version:date
+         :message-id:from:to:cc:subject:date:message-id:reply-to;
+        bh=WUcUxWzJafEC1dYAuVp9xbKl727o8ehKvo5AoxTjWo4=;
+        b=T5ZDL1xvXWUf/QXanHk+UFaB1Na5rYGwZdd2Puc64S/Y3FCa4oKjRCAfORBcMjOrFA
+         I6TNoKrv4BHB7w4lXZTVVzlnXJijs0wbLdsMlEf/pcL+irOuN+QdPbaQ+N8KDbhfw/3w
+         SzCWbzbFBLCfAxkmfSTNY9+fvMVyu4YL7w7rgy0DXk2/Rs4WPL62TJsJSuDjukaIP3Md
+         3hZqPLqvHCw2MtcD399LBKvO/7wUljmYevWhHFqz5seKQiUPcscdyFhBdUTs9793pumb
+         J7tKf7y/E43TQULffei1p9eBtc8rQz0qCePUH7HmnsAL0x99SrH5+dZDfMUEhmPfVtnz
+         FFuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1747512773; x=1748117573;
+        h=subject:from:to:content-language:user-agent:mime-version:date
+         :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=WUcUxWzJafEC1dYAuVp9xbKl727o8ehKvo5AoxTjWo4=;
+        b=RCIUy/QqaIVa+5n9+4dZ+8xICPOw/BN2vYDRCstn5wpodTFkeJsr35LF9eLown1FzT
+         hpbBtM75smt5CWW6Yz9ioujiTeE8V3kfq4r9zdobO4mhHkXOvc8YMQX79BYiCcQki+UR
+         dBrs893PPIk/kxV+8brHcQnEtvhGBEux6yE/ui4vziluCvqQV+8k32CxDS2DgYMXVqnG
+         ODSdoQNYKx0LP2vp8/KixqazxPeb+eO4h6wPsr197yTJ02kjKNBigGczjQ1dB9YE0lHQ
+         ebzOgBD1w02+Fm25/qMUMJgH24IFiKwudy2yxi6DWSLmSgwCn4HdlwcnEdRe6BIDjl4X
+         n5cQ==
+X-Gm-Message-State: AOJu0YybKhpoigvs4z6EZFe0QLWPVqCulQS35vH/e97gOOm82ABFkn01
+	pVG/9TNIoRukD7iALaZyCbhsO0IUbBGE271GDDzGGsUmER2Fj0wCHFl9XzQIkQ==
+X-Gm-Gg: ASbGncvCGU3oTQvjKFP1R6D+KzNoLdI7M0nWV9dxBGKTd2QGK3x5s7VoSa+buD1axbg
+	wZhe2cuDWMbhoclPjQeXX4Ct9RS5oqBWR9weJVW0eqy+dA5nJ9F6dUJdS34ZNlDqgfLYdTb7Sy/
+	Np6bsL6TX0K5bxNjIuUVvrY5MuycC3ukhdrhdF3BGZm3F2orqNwcyFBAMdHgk2vWUtu20pg3OQH
+	nEy2KpVvajNWQGNLSP9pHTuMeTZBn4jpgZiKcnPrz1e/BXOm2rGcBA3ieQMUgGiwX2XTVyizJdg
+	BfRANyV72a9a5UySpqbNgfCmoOt1ybp6uoYSfRq7NlSMRKkc4W91uVwB399CH09yQNitZivAoGE
+	JEx7Wb5BXnlzm
+X-Google-Smtp-Source: AGHT+IEljmhY+1fZvmPq4DcAmLRxSZSAf0JQDm+jsgzJ+XlgtpyTgwIzDAqeqLRnhLEKs5VKxbxm9w==
+X-Received: by 2002:a17:907:3e10:b0:ad5:5127:873 with SMTP id a640c23a62f3a-ad551270d69mr252626966b.61.1747512772504;
+        Sat, 17 May 2025 13:12:52 -0700 (PDT)
+Received: from [192.168.1.103] (ip-78-45-42-91.bb.vodafone.cz. [78.45.42.91])
+        by smtp.googlemail.com with ESMTPSA id a640c23a62f3a-ad52d4383e2sm334711366b.119.2025.05.17.13.12.51
+        for <yarri@listonos.cz>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 17 May 2025 13:12:51 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="------------0CbAkTKilZ00GJ8bOqDaTHk6"
+Message-ID: <b3074635-fa68-4b74-8648-3d1f21c362d4@gmail.com>
+Date: Sat, 17 May 2025 22:12:51 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+To: Jaromir Tomek <yarri@listonos.cz>
+From: Jaromir Tomek <jaromir.tomek@gmail.com>
+Subject: Text document with Latin 2 encoding
+
+This is a multi-part message in MIME format.
+--------------0CbAkTKilZ00GJ8bOqDaTHk6
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+
+--------------0CbAkTKilZ00GJ8bOqDaTHk6
+Content-Type: text/plain; charset=ISO-8859-2; name="text_document_latin2.txt"
+Content-Disposition: attachment; filename="text_document_latin2.txt"
+Content-Transfer-Encoding: 8bit
+
+Pøíli¹ ¾lu»ouèký kùò úpìl ïábelské ódy v kódování Latin 2.
+
+--------------0CbAkTKilZ00GJ8bOqDaTHk6--
