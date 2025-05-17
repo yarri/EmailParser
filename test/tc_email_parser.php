@@ -195,4 +195,20 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 		$this->assertEquals("text/html",$parts[0]->getMimeType());
 		$this->assertStringContains(">Glare, reflections, and poor visibility at night can make driving stressful",$parts[0]->getContent());
 	}
+
+	function test_invalid_email(){
+		$parser = new Yarri\EmailParser();
+
+		$exception_thrown = false;
+		$exception = null;
+		try {
+			$email = $parser->parse("nonsence");
+		}catch(Exception $e){
+			$exception_thrown = true;
+			$exception = $e;
+		}
+
+		$this->assertEquals(true,$exception_thrown);
+		$this->assertEquals("Yarri\EmailParser\InvalidEmailSourceException",get_class($e));
+	}
 }

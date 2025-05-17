@@ -1,7 +1,7 @@
 <?php
-namespace Yarri;
+namespace Yarri\EmailParser;
 
-require_once(__DIR__ . "/pear/Mail/mimeDecode.php");
+require_once(__DIR__ . "/../pear/Mail/mimeDecode.php");
 
 /*
 function set_input(&$input)
@@ -12,8 +12,6 @@ function get_part($id) //vraci cely zaznam ze struct vcetne tela (! oprava!!! te
 function get_body($id) //vraci telo
 */
 class ParsedEmail {
-
-	const VERSION = 0.1;
 
 	/* DEKLARACE HODNOT NUTNYCH PRO EMAIL: ZACATEK */
 	var $attachment = false;
@@ -37,38 +35,13 @@ class ParsedEmail {
 	var $email_id = null;
 	var $user_id = null;
 
-	var $mail_parser_version = self::VERSION;
+	var $mail_parser_version = \Yarri\EmailParser::VERSION;
 	var $mail_cache_dir = MAIL_CACHE_DIR;
 
 	protected $parser;
 
-	function __construct(EmailParser $parser){
+	function __construct(\Yarri\EmailParser $parser){
 		$this->parser = $parser;
-
-		//napojeni hlavicek na odkazy do $this->headers
-		$this->reply_to = &$this->headers["reply_to"];
-		$this->return_path = &$this->headers["return_path"];
-		$this->from = &$this->headers["from"];
-		$this->sender = &$this->headers["sender"];
-		$this->to = &$this->headers["to"];
-		$this->cc = &$this->headers["cc"];
-		$this->bcc = &$this->headers["bcc"];
-		$this->date = &$this->headers["date"];
-		$this->subject = &$this->headers["subject"];
-		$this->message_id = &$this->headers["message_id"];
-		$this->references = &$this->headers["references"];
-		$this->in_reply_to = &$this->headers["in_reply_to"];
-		$this->list_id = &$this->headers["list_id"];
-		$this->mailing_list = &$this->headers["mailing_list"];
-		$this->x_mailinglist = &$this->headers["x_mailinglist"];
-		$this->list_post = &$this->headers["list_post"];
-		$this->list_help = &$this->headers["list_help"];
-		$this->list_unsubscribe = &$this->headers["list_unsubscribe"];
-		$this->list_subscribe = &$this->headers["list_subscribe"];
-		$this->x_priority = &$this->headers["x_priority"];
-		$this->x_smile = &$this->headers["x_smile"];
-		$this->x_spam_status = &$this->headers["x_spam_status"];
-		$this->x_spamdetected = &$this->headers["x_spamdetected"];
 	}
 
 	function set_input(&$input){
@@ -116,6 +89,10 @@ class ParsedEmail {
 		$Mail_mimeDecode = new \Mail_mimeDecode($input,"\n");
 
 		$structure = $Mail_mimeDecode->decode($params);
+
+		if(!$structure || !$structure->headers || (sizeof($structure->headers)===1 && isset($structure->headers[""]))){
+			throw new InvalidEmailSourceException();
+		}
 
 		//myslim, ze bude dobre po padu Mail_mimeDecode, prhlasit email za text/plain a zobrazit! :)
 		//nebo alespon vyparsovat hlavicky!
@@ -254,19 +231,6 @@ class ParsedEmail {
 				//	//telo ma cenu ukladat do cache, jenom, kdyz neni included
 				//	$this->bodies["$id"] = &$structure->body;
 				//}
-
-				/*
-				if($mime_type == "text/plain" && $charset!="" && $charset!=DEFAULT_CHARSET){
-					//PREKLAD JAZYKA
-					//bude nutne vyrobit novy soubor (original zachovat)
-					$body = translate::cs2cs($body,$charset,DEFAULT_CHARSET);
-					$new_body = false;
-					if($new_body){
-						$body = $new_body;
-						$charset = $this->charset;
-					}	
-				}
-				*/
 			}
 
 			$this->id_counter++;
@@ -281,6 +245,7 @@ class ParsedEmail {
 				$_file = \Files::WriteToTemp($_body);
 				$mime_type = \Files::DetermineFileType($_file,["original_filename" => $name]);
 				\Files::Unlink($_file);
+				$mime_type = $mime_type ? $mime_type : $declared_mime_type;
 			}
 
 			$this->struct[] = array(

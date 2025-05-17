@@ -1,5 +1,5 @@
 <?php
-namespace Yarri;
+namespace Yarri\EmailParser;
 
 class ParsedEmailPart {
 
