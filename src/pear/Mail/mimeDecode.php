@@ -88,7 +88,7 @@
  * @version    Release: @package_version@
  * @link       http://pear.php.net/package/Mail_mime
  */
-class Mail_mimeDecode extends PEAR
+class __Mail_mimeDecode extends PEAR
 {
     /**
      * The raw email to decode
@@ -339,7 +339,7 @@ class Mail_mimeDecode extends PEAR
 						$encoding = isset($content_transfer_encoding) ? $content_transfer_encoding['value'] : '7bit';
 						$return->body = ($this->_decode_bodies ? $this->_decodeBody($body, $encoding) : $body);
 					}
-                    $obj = new Mail_mimeDecode($body);
+                    $obj = new __Mail_mimeDecode($body);
                     $return->parts[] = $obj->decode(array('include_bodies' => $this->_include_bodies,
 					                                      'decode_bodies'  => $this->_decode_bodies,
 														  'decode_headers' => $this->_decode_headers));

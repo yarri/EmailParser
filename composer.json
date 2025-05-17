@@ -13,6 +13,7 @@
         ],
         "require": {
                 "php": ">=7.0.0",
+                "pear/pear": "^1.10",
                 "atk14/translate": "^1.2",
                 "atk14/files": "^1.6",
                 "yarri/utf8-cleaner": "^1.1"

@@ -86,7 +86,7 @@ class ParsedEmail {
 			'decode_bodies'  => TRUE
 		);
 		
-		$Mail_mimeDecode = new \Mail_mimeDecode($input,"\n");
+		$Mail_mimeDecode = new \__Mail_mimeDecode($input,"\n");
 
 		$structure = $Mail_mimeDecode->decode($params);
 
