@@ -51,6 +51,17 @@ class ParsedEmailPart {
 		return $this->struct["charset"];
 	}
 
+	function getParentPart(){
+		$parents = [];
+		foreach($this->email->getParts() as $part){
+			$l = $part->getLevel();
+			$parents[$l] = $part;;
+			if($part->getId()==$this->getId()){
+				return isset($parents[$l-1]) ? $parents[$l-1] : null;
+			}
+		}
+	}
+
 	function toArray(){
 		return $this->struct;
 	}
