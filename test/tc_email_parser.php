@@ -318,9 +318,10 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 
 			"text_document_with_latin_2_encoding.txt" => true,
 			"html_document_in_latin_2_encoding.txt.gz" => true,
+			"multipart_related.txt" => false,
 		] as $file => $has_attachment_exp){
 			$email = $parser->parseFile(__DIR__ . "/sample_emails/$file");
-			$this->assertEquals($has_attachment_exp,$email->hasAttachment());
+			$this->assertEquals($has_attachment_exp,$email->hasAttachment(),"$file expected to ".($has_attachment_exp ? "have attachment" : "haven't attachment"));
 		}
 	}
 }
