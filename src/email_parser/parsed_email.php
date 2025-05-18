@@ -186,6 +186,7 @@ class ParsedEmail {
 	function getTo(){ return $this->getHeader("to"); }
 	function getDate(){
 		$date = $this->getHeader("date");
+		if(!$date){ return null; }
 		$out = date("Y-m-d H:i:s",strtotime($date));
 		if($out){ return $out; }
 	}

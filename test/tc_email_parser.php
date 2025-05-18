@@ -290,6 +290,23 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 		$this->assertEquals("Yarri\EmailParser\InvalidEmailSourceException",get_class($e));
 	}
 
+	function test_minimal_email(){
+		$parser = new Yarri\EmailParser();
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/minimal_email.txt");
+
+		$this->assertEquals("Minimal email",$email->getSubject());
+		$this->assertNull($email->getFrom());
+		$this->assertNull($email->getTo());
+		$this->assertNull($email->getDate());
+
+		$parts = $email->getParts();
+
+		$this->assertEquals(1,sizeof($parts));
+		$this->assertEquals("text/plain",$parts[0]->getMimeType());
+		$this->assertEquals("text/plain",$parts[0]->getDeclaredMimeType());
+		$this->assertEquals("Test\n",$parts[0]->getContent());
+	}
+
 	function test_getFirstReadablePart(){
 		$parser = new Yarri\EmailParser();
 
