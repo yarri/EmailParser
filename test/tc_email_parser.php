@@ -232,6 +232,21 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 		$this->assertEquals(60,$parts[2]->getSize());
 	}
 
+	function test_html_document_in_latin_2_encoding(){
+		$parser = new Yarri\EmailParser();
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/html_document_in_latin_2_encoding.txt.gz");
+
+		$parts = $email->getParts();
+
+		$this->assertEquals(3,sizeof($parts));
+
+		$this->assertEquals("text/html",$parts[2]->getMimeType());
+		$this->assertEquals("iso-8859-2",$parts[2]->getCharset());
+		$this->assertEquals("html_document_latin2.html",$parts[2]->getFilename());
+		$this->assertStringContains("<p>Příliš žluťoučký kůň úpěl ďábelské ódy.</p>",trim(Translate::Trans($parts[2]->getContent(),"iso-8859-2","UTF-8")));
+		$this->assertEquals(146,$parts[2]->getSize());
+	}
+
 	function test_spam_with_invalid_subject(){
 		$email_content = Files::GetFileContent(__DIR__ . "/sample_emails/spam_with_invalid_subject.txt");
 		$parser = new Yarri\EmailParser();
