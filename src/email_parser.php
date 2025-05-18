@@ -16,7 +16,7 @@ class EmailParser {
 	 */
 	function parse(string $email_source){
 		$email = new EmailParser\ParsedEmail($this);
-		$email->set_input($email_source);
+		$email->setEmailSource($email_source);
 		return $email;
 	}
 

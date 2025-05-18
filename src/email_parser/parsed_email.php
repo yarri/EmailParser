@@ -3,24 +3,11 @@ namespace Yarri\EmailParser;
 
 require_once(__DIR__ . "/../pear/Mail/mimeDecode.php");
 
-/*
-function set_input(&$input)
-
-*/
 class ParsedEmail {
 
-	/* DEKLARACE HODNOT NUTNYCH PRO EMAIL: ZACATEK */
 	var $size = 0;
-
 	var $headers = [];
-	
-	var $received_from_host = "";
-	
-	//struktura celeho emailu, mimo hlavicek
-	var $struct = array();
-	/* DEKLARACE HODNOT NUTNYCH PRO EMAIL: KONEC */
-	var $bodies = array(); // pak se uklada do cache!!!
-	
+	var $struct = [];
 	var $input = "";
 
 	var $id_counter = 1;
@@ -35,14 +22,12 @@ class ParsedEmail {
 		$this->parser = $parser;
 	}
 
-	function set_input(&$input){
+	function setEmailSource(&$input){
 		$this->_reset();
-		$this->_set_input($input);
+		$this->_setEmailSource($input);
 	}
 
-	function _set_input(&$input){
-		//preparing object's values
-		//$this->_reset();
+	function _setEmailSource(&$input){
 		$this->size = strlen($input);
 
 		$params = array(
@@ -61,14 +46,6 @@ class ParsedEmail {
 			throw new InvalidEmailSourceException();
 		}
 
-		//myslim, ze bude dobre po padu Mail_mimeDecode, prhlasit email za text/plain a zobrazit! :)
-		//nebo alespon vyparsovat hlavicky!
-
-		//if($Mail_mimeDecode->_error){
-		//echo $Mail_mimeDecode->_error;
-		//exit;
-		//}
-		
 		$first = true;
 		foreach($structure->headers as $key => $value){
 			$key = trim($key);
@@ -88,37 +65,19 @@ class ParsedEmail {
 			$this->headers[$key] = $value;
 			continue;
 		}
-
-		//kraceni vsech hlavicek na 1000 znaku
-		/*
-		foreach($this->headers as $key => $value){
-			if(strlen($this->headers[$key])>1000){
-				$this->headers[$key] = substr($this->headers[$key],0,1000);
-			}
-		}
-		*/
 		
-		$this->fill_struct($structure);
+		$this->_fillStruct($structure);
 	}
 
 	function _reset(){
 		$this->size = 0;
-
-
 		$this->headers = [];
-
-		$this->received_from_host = "";
-
-		$this->struct = array();
-
-		$this->bodies = array();
-
+		$this->struct = [];
 		$this->id_counter = 1;
 		$this->level_counter = 0;
 	}
 
-
-	function fill_struct(&$structure){
+	function _fillStruct(&$structure){
 		$this->level_counter++;
 		$object = true;// :-) - TO JE VZDYCKU
 
@@ -132,8 +91,6 @@ class ParsedEmail {
 		$size = 0;
 		$content_id = null;
 		if($object){
-			//var_dump(array_keys(get_object_vars($structure)));
-			//var_dump($structure->headers);
 			if(isset($structure->ctype_primary) && isset($structure->ctype_secondary)){
 				$declared_mime_type = strtolower(trim($structure->ctype_primary)."/".trim($structure->ctype_secondary));
 			}
@@ -171,13 +128,6 @@ class ParsedEmail {
 					$_body = \Yarri\Utf8Cleaner::Clean($_body);
 					$charset = "UTF-8";
 				}
-
-				// TODO: ???
-				//if($size<10000){
-				//}else{
-				//	//telo ma cenu ukladat do cache, jenom, kdyz neni included
-				//	$this->bodies["$id"] = &$structure->body;
-				//}
 			}
 
 			$this->id_counter++;
@@ -204,12 +154,9 @@ class ParsedEmail {
 				"size" => $size,
 			);
 
-			//assert(!!$this->user_id);
-			//assert(!!$this->email_id);
-						
 			if(isset($structure->parts)){
 				for($i=0;$i<sizeof($structure->parts);$i++){
-					$this->fill_struct($structure->parts[$i]);
+					$this->_fillStruct($structure->parts[$i]);
 				}
 			}
 		}
