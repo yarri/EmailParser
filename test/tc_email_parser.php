@@ -284,4 +284,43 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 		$this->assertEquals(true,$exception_thrown);
 		$this->assertEquals("Yarri\EmailParser\InvalidEmailSourceException",get_class($e));
 	}
+
+	function test_getFirstReadablePart(){
+		$parser = new Yarri\EmailParser();
+
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/text_plain.txt");
+		//
+		$part = $email->getFirstReadablePart();
+		$this->assertEquals("text/plain",$part->getMimeType());
+		$this->assertStringContains("Zdravím sebe sama!",(string)$part);
+		//
+		$part = $email->getFirstReadablePart(["prefer_html" => true]);
+		$this->assertEquals("text/plain",$part->getMimeType());
+		$this->assertStringContains("Zdravím sebe sama!",(string)$part);
+
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/multipart_alternative.txt");
+		//
+		$part = $email->getFirstReadablePart();
+		$this->assertEquals("text/plain",$part->getMimeType());
+		$this->assertStringContains("Zdravím sebe sama!",(string)$part);
+		//
+		$part = $email->getFirstReadablePart(["prefer_html" => true]);
+		$this->assertEquals("text/html",$part->getMimeType());
+		$this->assertStringContains(">Zdravím sebe sama!<",(string)$part);
+	}
+
+	function test_hasAttachment(){
+		$parser = new Yarri\EmailParser();
+
+		foreach([
+			"text_plain.txt" => false,
+			"multipart_alternative.txt" => false,
+
+			"text_document_with_latin_2_encoding.txt" => true,
+			"html_document_in_latin_2_encoding.txt.gz" => true,
+		] as $file => $has_attachment_exp){
+			$email = $parser->parseFile(__DIR__ . "/sample_emails/$file");
+			$this->assertEquals($has_attachment_exp,$email->hasAttachment());
+		}
+	}
 }

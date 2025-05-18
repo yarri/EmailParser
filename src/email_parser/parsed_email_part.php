@@ -65,4 +65,6 @@ class ParsedEmailPart {
 	function toArray(){
 		return $this->struct;
 	}
+
+	function __toString(){ return (string)$this->getContent(); }
 }

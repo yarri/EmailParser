@@ -201,6 +201,30 @@ class ParsedEmail {
 		}
 	}
 
+	function getFirstReadablePart($options = []){
+		$options += [
+			"prefer_html" => false,
+		];
+		$plain = null;
+		$html = null;
+		foreach($this->getParts() as $part){
+			if($plain && $html){ break; }
+			if(!in_array($part->getMimeType(),["text/plain","text/html"]) || strlen((string)$part->getFilename())){ continue; }
+			if($part->getMimeType()=="text/plain" && !$plain){ $plain = $part; continue; }
+			if($part->getMimeType()=="text/html" && !$html){ $html = $part; continue; }
+		}
+		return (!$plain || ($options["prefer_html"] && $html)) ? $html : $plain; 
+	}
+
+	function hasAttachment(){
+		foreach($this->getParts() as $part){
+			if($part->hasContent() && strlen((string)$part->getFilename())){
+				return true;
+			}
+		}
+		return false;
+	}
+
 	static function _CorrectFilename($filename){
 		if(is_null($filename)){ return null; }
 		$filename = trim((string)$filename);
