@@ -181,6 +181,15 @@ class ParsedEmail {
 		return $header;
 	}
 
+	function getSubject(){ return $this->getHeader("subject"); }
+	function getFrom(){ return $this->getHeader("from"); }
+	function getTo(){ return $this->getHeader("to"); }
+	function getDate(){
+		$date = $this->getHeader("date");
+		$out = date("Y-m-d H:i:s",strtotime($date));
+		if($out){ return $out; }
+	}
+
 	function getParts(){
 		$parts = [];
 		foreach($this->struct as $struct){

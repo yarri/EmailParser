@@ -6,6 +6,11 @@ class TcEmailParser extends TcBase {
 		$parser = new Yarri\EmailParser();
 		$email = $parser->parse($email_content);
 
+		$this->assertEquals('RE: Testovací zpráva (text/plain)',$email->getSubject());
+		$this->assertEquals('"Jaromir Tomek" <yarri@listonos.cz>',$email->getFrom());
+		$this->assertEquals('yarri@listonos.cz',$email->getTo());
+		$this->assertEquals('2013-10-07 20:00:03',$email->getDate()); // UTC, see test/initialize.php
+
 		$this->assertEquals('"Jaromir Tomek" <yarri@listonos.cz>',$email->getHeader("from"));
 		$this->assertEquals(['"Jaromir Tomek" <yarri@listonos.cz>'],$email->getHeader("from",["as_array" => true]));
 		$this->assertEquals('RE: Testovací zpráva (text/plain)',$email->getHeader("Subject"));
@@ -323,5 +328,19 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 			$email = $parser->parseFile(__DIR__ . "/sample_emails/$file");
 			$this->assertEquals($has_attachment_exp,$email->hasAttachment(),"$file expected to ".($has_attachment_exp ? "have attachment" : "haven't attachment"));
 		}
+	}
+
+	function test_getDate(){
+		$parser = new Yarri\EmailParser();
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/hard_to_parse_1.txt");
+
+		date_default_timezone_set("America/Los_Angeles");
+		$this->assertEquals("2025-05-01 11:22:13",$email->getDate());
+
+		date_default_timezone_set("Europe/Prague");
+		$this->assertEquals("2025-05-01 20:22:13",$email->getDate());
+
+		date_default_timezone_set("UTC");
+		$this->assertEquals("2025-05-01 18:22:13",$email->getDate());
 	}
 }
