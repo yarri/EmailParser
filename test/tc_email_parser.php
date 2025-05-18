@@ -39,6 +39,17 @@ class TcEmailParser extends TcBase {
 
 		$parent = $parts[0]->getParentPart();
 		$this->assertTrue(is_null($parent));
+
+		// EmailParser::parseFile()
+
+		$parser = new Yarri\EmailParser();
+
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/multipart_alternative.txt");
+		$this->assertEquals("Testovací zpráva (multipart/alternative)",$email->getHeader("subject"));
+
+		// a gziped file
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/html_document_in_latin_2_encoding.txt.gz");
+		$this->assertEquals("HTML document in Latin 2 encoding",$email->getHeader("subject"));
 	}
 
 	function test_multipart_alternative(){
