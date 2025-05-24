@@ -5,21 +5,20 @@ require_once(__DIR__ . "/../pear/Mail/mimeDecode.php");
 
 class ParsedEmail {
 
-	var $size = 0;
-	var $headers = [];
-	var $struct = [];
-	var $input = "";
-
-	var $id_counter = 1;
-	var $level_counter = 0;
-
-	var $mail_parser_version = \Yarri\EmailParser::VERSION;
-	var $mail_cache_dir = MAIL_CACHE_DIR;
-
 	protected $parser;
+	protected $cache_dir = ""; // path to a cache directory for the given email
 
-	function __construct(\Yarri\EmailParser $parser){
+	protected $size = 0;
+	protected $headers = [];
+	protected $struct = [];
+
+	protected $id_counter = 1;
+	protected $level_counter = 0;
+
+
+	function __construct(\Yarri\EmailParser $parser, string $cache_dir = ""){
 		$this->parser = $parser;
+		$this->cache_dir = $cache_dir;
 	}
 
 	function setEmailSource(&$input){
@@ -28,15 +27,19 @@ class ParsedEmail {
 	}
 
 	function _setEmailSource(&$input){
+		if($this->_readCache()){
+			return;
+		}
+
 		$this->size = strlen($input);
 
-		$params = array(
-			'input'          => &$input,
-			'crlf'           => "\n",
-			'include_bodies' => TRUE,
-			'decode_headers' => TRUE,
-			'decode_bodies'  => TRUE
-		);
+		$params = [
+			"input"          => &$input,
+			"crlf"           => "\n",
+			"include_bodies" => TRUE,
+			"decode_headers" => TRUE,
+			"decode_bodies"  => TRUE
+		];
 		
 		$Mail_mimeDecode = new \__Mail_mimeDecode($input,"\n");
 
@@ -51,7 +54,7 @@ class ParsedEmail {
 			$key = trim($key);
 			$key = \Yarri\Utf8Cleaner::Clean($key);
 			$key = mb_strtolower($key);
-			$key = str_replace('-','_',$key); // "message-id" => "message_id"
+			$key = str_replace("-","_",$key); // "message-id" => "message_id"
 			
 			if(is_array($value)){
 				$value = array_map(function($item){ return \Yarri\Utf8Cleaner::Clean($item); },$value);
@@ -67,6 +70,8 @@ class ParsedEmail {
 		}
 		
 		$this->_fillStruct($structure);
+
+		$this->_writeCache();
 	}
 
 	function _reset(){
@@ -161,6 +166,84 @@ class ParsedEmail {
 			}
 		}
 		$this->level_counter--;
+	}
+
+	function _writeCache(){
+		$out = false;
+
+		$cache_dir = $this->_getCacheDir();
+
+		if(!$cache_dir){ return $out; }
+
+		if(!file_exists($cache_dir)){
+			$error = false;
+			$error_str = "";
+			$stat = \Files::Mkdir($cache_dir,$error,$error_str);
+			if($error){
+				//ERROR: nepodarilo se vytvorit cache adresar pro uzivatele
+				return $out;
+			}
+		}
+		
+		foreach($this->struct as &$struct){
+			if($struct["has_content"] && $struct["size"]>10000){
+				$id = $struct["id"];
+				$body_cache_filename = $this->_getCacheFilenameForPart($id);
+				$__error = false;
+				$__error_str = "";
+				\Files::MkdirForFile($body_cache_filename,$_error,$__error_str);
+				\Files::WriteToFile($body_cache_filename,$struct["body"],$__error,$__error_str);
+
+				$struct["body_included"] = false;
+				$struct["body"] = null;
+			}
+		}
+
+		$cache = serialize([
+			"email_parser_version" => \Yarri\EmailParser::VERSION,
+			"size" => $this->size,
+			"headers" => $this->headers,
+			"struct" => $this->struct,
+		]);
+		$cache_file = $cache_dir."/cache.ser";
+
+		$__error = false;
+		$__error_str = "";
+		\Files::WriteToFile($cache_file,$cache,$__error,$__error_str);
+
+		return true;
+	}
+
+	function _readCache(){
+		$cache_dir = $this->_getCacheDir();
+		if(!$cache_dir){ return false; }
+
+		if(!file_exists("$cache_dir/cache.ser")){ return false; }
+		$cache_ser = \Files::GetFileContent("$cache_dir/cache.ser");
+		$cache = unserialize($cache_ser);
+
+		if(!is_array($cache)){ return false; }
+		if(!isset($cache["email_parser_version"])){ return false; }
+		if($cache["email_parser_version"]!==\Yarri\EmailParser::VERSION){ return false; }
+
+		foreach($cache as $key => $value){
+			if($key==="email_parser_version"){ continue; }
+			$this->$key = $value; // $this->size, $this->headers...
+		}
+		
+		return true;
+	}
+
+	function _getCacheDir(){
+		if(!$this->cache_dir){
+			return null;
+		}
+
+		return $this->cache_dir;
+	}
+	
+	function _getCacheFilenameForPart($id){
+		return $this->_getCacheDir()."/parts/".$id.".cache";
 	}
 
 	function getHeader($key,$options = []){

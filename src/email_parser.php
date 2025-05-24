@@ -14,8 +14,8 @@ class EmailParser {
 	 *	$email = $parser->parseFile("/path/to/email.eml");
 	 *	$email = $parser->parseFile("/path/to/email.eml.gz");
 	 */
-	function parse(string $email_source){
-		$email = new EmailParser\ParsedEmail($this);
+	function parse(string $email_source, string $cache_dir = ""){
+		$email = new EmailParser\ParsedEmail($this,$cache_dir);
 		$email->setEmailSource($email_source);
 		return $email;
 	}
@@ -26,11 +26,11 @@ class EmailParser {
 	 *	$email = $parser->parseFile("/path/to/email.eml");
 	 *	$email = $parser->parseFile("/path/to/email.eml.gz");
 	 */
-	function parseFile(string $filename){
+	function parseFile(string $filename, string $cache_dir = ""){
 		$email_source = \Files::GetFileContent($filename,$err,$err_msg);
 		if(preg_match('/\.gz/i',$filename)){
 			$email_source = gzdecode($email_source);
 		}
-		return $this->parse($email_source);
+		return $this->parse($email_source,$cache_dir);
 	}
 }
