@@ -42,7 +42,7 @@ class ParsedEmailPart {
 	function getContent(){
 		$buffer = $this->getContentBuffer();
 		if(!$buffer){ return null; }
-		return (string)$buffer;
+		return $buffer->toString();
 	}
 
 	function getContentBuffer(){
