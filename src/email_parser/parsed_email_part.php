@@ -41,13 +41,21 @@ class ParsedEmailPart {
 
 	function getContent(){
 		$buffer = $this->getContentBuffer();
-		if(!$buffer){ return null; }
 		return $buffer->toString();
 	}
 
+	/**
+	 *
+	 *	$buffer = $part->getContentBuffer();
+	 *
+	 *	header("Content-Type: ".$buffer->getMimeType());
+	 *	$buffer->printOut();
+	 *
+	 * @return \StringBuffer
+	 */
 	function getContentBuffer(){
-		if(!$this->struct["has_content"]){ return null; }
 		$buffer = new \StringBuffer();
+		if(!$this->struct["has_content"]){ return $buffer; }
 		if(!$this->struct["body_included"]){
 			$filename = $this->email->_getCacheFilenameForPart($this->getId());
 			$buffer->addFile($filename);

@@ -71,7 +71,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(1,$parts[0]->getLevel());
 		$this->assertEquals(1,$parts[0]->getId());
 		$this->assertEquals(false,$parts[0]->hasContent());
-		$this->assertTrue(is_null($parts[0]->getContent()));
+		$this->assertTrue(""===$parts[0]->getContent());
 		$this->assertTrue(is_null($parts[0]->getCharset()));
 		$parent = $parts[0]->getParentPart();
 		$this->assertTrue(is_null($parent));
