@@ -40,7 +40,21 @@ class ParsedEmailPart {
 	}
 
 	function getContent(){
-		return $this->struct["body"];
+		$buffer = $this->getContentBuffer();
+		if(!$buffer){ return null; }
+		return (string)$buffer;
+	}
+
+	function getContentBuffer(){
+		if(!$this->struct["has_content"]){ return null; }
+		$buffer = new \StringBuffer();
+		if(!$this->struct["body_included"]){
+			$filename = $this->email->_getCacheFilenameForPart($this->getId());
+			$buffer->addFile($filename);
+			return $buffer;
+		}
+		$buffer->addString($this->struct["body"]);
+		return $buffer;
 	}
 
 	function getSize(){
