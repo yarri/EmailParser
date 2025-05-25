@@ -31,6 +31,7 @@ class TcEmailParser extends TcBase {
 		$this->assertStringContains("Díky za zprávu.",$parts[0]->getContent());
 		$this->assertEquals("UTF-8",$parts[0]->getCharset());
 		$this->assertEquals(198,$parts[0]->getSize());
+		$this->assertEquals(false,$parts[0]->isAttachment());
 
 		// ParsedEmailPart::getPartById()
 
@@ -72,6 +73,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(1,$parts[0]->getId());
 		$this->assertEquals(false,$parts[0]->hasContent());
 		$this->assertTrue(""===$parts[0]->getContent());
+		$this->assertEquals(false,$parts[0]->isAttachment());
 		$this->assertTrue(is_null($parts[0]->getCharset()));
 		$parent = $parts[0]->getParentPart();
 		$this->assertTrue(is_null($parent));
@@ -83,6 +85,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(2,$parts[1]->getLevel());
 		$this->assertEquals(2,$parts[1]->getId());
 		$this->assertStringContains("Zdravím sebe sama!",$parts[1]->getContent());
+		$this->assertEquals(false,$parts[1]->isAttachment());
 		$this->assertEquals("UTF-8",$parts[1]->getCharset());
 		$parent = $parts[1]->getParentPart();
 		$this->assertEquals(1,$parent->getId());
@@ -93,6 +96,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(2,$parts[2]->getLevel());
 		$this->assertEquals(3,$parts[2]->getId());
 		$this->assertStringContains("Zdravím sebe sama!<br><br>",$parts[2]->getContent());
+		$this->assertEquals(false,$parts[1]->isAttachment());
 		$this->assertEquals("UTF-8",$parts[2]->getCharset());
 		$parent = $parts[2]->getParentPart();
 		$this->assertEquals(1,$parent->getId());
@@ -114,6 +118,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(1,$parts[0]->getLevel());
 		$this->assertEquals(null,$parts[0]->getContentId());
 		$this->assertEquals(null,$parts[0]->getFilename());
+		$this->assertEquals(false,$parts[0]->isAttachment());
 		$parent = $parts[0]->getParentPart();
 		$this->assertTrue(is_null($parent));
 
@@ -123,6 +128,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(2,$parts[1]->getLevel());
 		$this->assertEquals(null,$parts[1]->getContentId());
 		$this->assertEquals(null,$parts[1]->getFilename());
+		$this->assertEquals(false,$parts[1]->isAttachment());
 		$parent = $parts[1]->getParentPart();
 		$this->assertEquals(1,$parent->getId());
 
@@ -132,6 +138,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(3,$parts[2]->getLevel());
 		$this->assertEquals(null,$parts[2]->getContentId());
 		$this->assertEquals(null,$parts[2]->getFilename());
+		$this->assertEquals(false,$parts[2]->isAttachment());
 		$parent = $parts[2]->getParentPart();
 		$this->assertEquals(2,$parent->getId());
 
@@ -141,6 +148,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(3,$parts[3]->getLevel());
 		$this->assertEquals(null,$parts[3]->getContentId());
 		$this->assertEquals(null,$parts[3]->getFilename());
+		$this->assertEquals(false,$parts[3]->isAttachment());
 		$parent = $parts[3]->getParentPart();
 		$this->assertEquals(2,$parent->getId());
 
@@ -151,6 +159,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(2,$parts[4]->getLevel());
 		$this->assertEquals("<c1>",$parts[4]->getContentId());
 		$this->assertEquals("dungeon-master.png",$parts[4]->getFilename());
+		$this->assertEquals(false,$parts[4]->isAttachment());
 		$this->assertEquals(11462,$parts[4]->getSize());
 		$this->assertEquals("c4f99bdb6a4feb3b41b1bcd56a4d7aa3",md5($parts[4]->getContent()));
 		$parent = $parts[4]->getParentPart();
@@ -163,6 +172,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals(2,$parts[5]->getLevel());
 		$this->assertEquals("<c2>",$parts[5]->getContentId());
 		$this->assertEquals("holub.jpg",$parts[5]->getFilename());
+		$this->assertEquals(false,$parts[5]->isAttachment());
 		$this->assertEquals(9123,$parts[5]->getSize());
 		$this->assertEquals("144875a232cb1d2d5abfbf75f4e52d61",md5($parts[5]->getContent()));
 		$parent = $parts[5]->getParentPart();
@@ -218,6 +228,7 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 		$this->assertEquals("image/webp",$parts[2]->getMimeType());
 		$this->assertEquals("image/jpeg",$parts[2]->getDeclaredMimeType());
 		$this->assertEquals("Malé roztomilé lištičky.jpeg",$parts[2]->getFilename());
+		$this->assertEquals(true,$parts[2]->isAttachment());
 	}
 
 	function test_text_document_with_latin_2_encoding(){
@@ -233,6 +244,7 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 		$this->assertEquals("text/plain",$parts[2]->getMimeType());
 		$this->assertEquals("iso-8859-2",$parts[2]->getCharset());
 		$this->assertEquals("text_document_latin2.txt",$parts[2]->getFilename());
+		$this->assertEquals(true,$parts[2]->isAttachment());
 		$this->assertEquals("Příliš žluťoučký kůň úpěl ďábelské ódy v kódování Latin 2.",trim(Translate::Trans($parts[2]->getContent(),"iso-8859-2","UTF-8")));
 		$this->assertEquals(60,$parts[2]->getSize());
 	}
@@ -248,6 +260,7 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 		$this->assertEquals("text/html",$parts[2]->getMimeType());
 		$this->assertEquals("iso-8859-2",$parts[2]->getCharset());
 		$this->assertEquals("html_document_latin2.html",$parts[2]->getFilename());
+		$this->assertEquals(true,$parts[2]->isAttachment());
 		$this->assertStringContains("<p>Příliš žluťoučký kůň úpěl ďábelské ódy.</p>",trim(Translate::Trans($parts[2]->getContent(),"iso-8859-2","UTF-8")));
 		$this->assertEquals(146,$parts[2]->getSize());
 	}

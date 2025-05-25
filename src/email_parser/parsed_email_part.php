@@ -84,6 +84,19 @@ class ParsedEmailPart {
 		}
 	}
 
+  function isAttachment(){
+		if(preg_match('/^image\//',$this->getMimeType()) && $this->getContentId()){
+			$parent = $this->getParentPart();
+			if($parent && $parent->getMimeType()=="multipart/related"){
+        return false;
+			}
+		}
+		if($this->hasContent() && strlen((string)$this->getFilename())){
+			return true;
+		}
+    return false;
+  }
+
 	function toArray(){
 		return $this->struct;
 	}

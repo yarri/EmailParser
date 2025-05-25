@@ -313,15 +313,7 @@ class ParsedEmail {
 
 	function hasAttachment(){
 		foreach($this->getParts() as $part){
-			if(preg_match('/^image\//',$part->getMimeType()) && $part->getContentId()){
-				$parent = $part->getParentPart();
-				if($parent && $parent->getMimeType()=="multipart/related"){
-					continue;
-				}
-			}
-			if($part->hasContent() && strlen((string)$part->getFilename())){
-				return true;
-			}
+      if($part->isAttachment()){ return true; }
 		}
 		return false;
 	}
