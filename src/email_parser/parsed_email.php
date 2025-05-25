@@ -276,6 +276,7 @@ class ParsedEmail {
 		$out = date("Y-m-d H:i:s",strtotime($date));
 		if($out){ return $out; }
 	}
+	function getSize(){ return $this->size; }
 
 	function getParts(){
 		$parts = [];

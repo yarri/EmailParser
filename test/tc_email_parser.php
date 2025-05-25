@@ -10,6 +10,7 @@ class TcEmailParser extends TcBase {
 		$this->assertEquals('"Jaromir Tomek" <yarri@listonos.cz>',$email->getFrom());
 		$this->assertEquals('yarri@listonos.cz',$email->getTo());
 		$this->assertEquals('2013-10-07 20:00:03',$email->getDate()); // UTC, see test/initialize.php
+		$this->assertEquals(931,$email->getSize());
 
 		$this->assertEquals('"Jaromir Tomek" <yarri@listonos.cz>',$email->getHeader("from"));
 		$this->assertEquals(['"Jaromir Tomek" <yarri@listonos.cz>'],$email->getHeader("from",["as_array" => true]));
@@ -56,6 +57,7 @@ class TcEmailParser extends TcBase {
 		// a gziped file
 		$email = $parser->parseFile(__DIR__ . "/sample_emails/html_document_in_latin_2_encoding.txt.gz");
 		$this->assertEquals("HTML document in Latin 2 encoding",$email->getHeader("subject"));
+		$this->assertEquals(4592,$email->getSize()); // size of the uncompressed source
 	}
 
 	function test_multipart_alternative(){
