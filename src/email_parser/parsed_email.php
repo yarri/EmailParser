@@ -150,7 +150,7 @@ class ParsedEmail {
 
 			$mime_type = $declared_mime_type;
 			if($declared_mime_type && !(strlen($name)===0 && strlen($_body)===0) && !(in_array($declared_mime_type,["text/plain","text/html"]) && !strlen($name))){
-				$_file = \Files::WriteToTemp($_body);
+				$_file = \Files::WriteToTemp($_body,$err,$err_msg);
 				$mime_type = \Files::DetermineFileType($_file,["original_filename" => $name]);
 				\Files::Unlink($_file);
 				$mime_type = $mime_type ? $mime_type : $declared_mime_type;
@@ -180,30 +180,24 @@ class ParsedEmail {
 	}
 
 	function _writeCache(){
-		$out = false;
-
 		$cache_dir = $this->_getCacheDir();
+		if(!$cache_dir){ return null; }
 
-		if(!$cache_dir){ return $out; }
+		$uniqid = uniqid();
 
 		if(!file_exists($cache_dir)){
-			$error = false;
-			$error_str = "";
-			$stat = \Files::Mkdir($cache_dir,$error,$error_str);
-			if($error){
-				//ERROR: nepodarilo se vytvorit cache adresar pro uzivatele
-				return $out;
-			}
+			$stat = \Files::Mkdir($cache_dir,$err,$err_msg);
+			if($err){ return false; }
 		}
 		
 		foreach($this->struct as &$struct){
 			if($struct["has_content"] && $struct["size"]>10000){
 				$id = $struct["id"];
 				$body_cache_filename = $this->_getCacheFilenameForPart($id);
-				$__error = false;
-				$__error_str = "";
-				\Files::MkdirForFile($body_cache_filename,$_error,$__error_str);
-				\Files::WriteToFile($body_cache_filename,$struct["body"],$__error,$__error_str);
+				\Files::MkdirForFile($body_cache_filename,$err,$err_msg);
+				\Files::WriteToFile("$body_cache_filename.$uniqid",$struct["body"],$err,$err_msg);
+				\Files::MoveFile("$body_cache_filename.$uniqid",$body_cache_filename,$struct["body"],$err,$err_msg);
+				if($err){ return false;}
 
 				$struct["body_included"] = false;
 				$struct["body"] = null;
@@ -216,11 +210,11 @@ class ParsedEmail {
 			"headers" => $this->headers,
 			"struct" => $this->struct,
 		]);
-		$cache_file = $cache_dir."/cache.ser";
 
-		$__error = false;
-		$__error_str = "";
-		\Files::WriteToFile($cache_file,$cache,$__error,$__error_str);
+		$cache_file = $cache_dir."/cache.ser";
+		\Files::WriteToFile("$cache_file.$uniqid",$cache,$err,$err_msg);
+		\Files::MoveFile("$cache_file.$uniqid",$cache_file,$cache,$err,$err_msg);
+		if($err){ return false; }
 
 		return true;
 	}
@@ -246,9 +240,7 @@ class ParsedEmail {
 	}
 
 	function _getCacheDir(){
-		if(!$this->cache_dir){
-			return null;
-		}
+		if(!$this->cache_dir){ return null; }
 
 		return $this->cache_dir;
 	}
@@ -309,8 +301,7 @@ class ParsedEmail {
 		$options += [
 			"prefer_html" => false,
 		];
-		$plain = null;
-		$html = null;
+		$plain = $html = null;
 		foreach($this->getParts() as $part){
 			if($plain && $html){ break; }
 			if(!in_array($part->getMimeType(),["text/plain","text/html"]) || strlen((string)$part->getFilename())){ continue; }
