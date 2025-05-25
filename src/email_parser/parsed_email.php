@@ -22,14 +22,25 @@ class ParsedEmail {
 	}
 
 	function setEmailSource(&$input){
-		$this->_reset();
-		$this->_setEmailSource($input);
-	}
-
-	function _setEmailSource(&$input){
 		if($this->_readCache()){
 			return;
 		}
+		$this->_setEmailSource($input);
+	}
+
+	function setEmailSourceByFile(string $filename){
+		if($this->_readCache()){
+			return;
+		}
+		$email_source = \Files::GetFileContent($filename,$err,$err_msg);
+		if(preg_match('/\.gz/i',$filename)){
+			$email_source = gzdecode($email_source);
+		}
+		return $this->setEmailSource($email_source);
+	}
+
+	function _setEmailSource(&$input){
+		$this->_reset();
 
 		$this->size = strlen($input);
 

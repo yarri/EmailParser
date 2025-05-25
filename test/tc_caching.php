@@ -58,6 +58,7 @@ class TcCaching extends TcBase {
 		$stop = microtime(true);
 		$cached_time = $stop - $start;
 
-		$this->assertTrue(($uncached_time / $cached_time) > 10);
+		$acceleration_ratio = ($uncached_time / $cached_time);
+		$this->assertTrue($acceleration_ratio > 10.0, "acceleration_ratio: $acceleration_ratio");
 	}
 }
