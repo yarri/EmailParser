@@ -359,12 +359,12 @@ class ParsedEmail {
 		$filename = \Yarri\Utf8Cleaner::Clean($filename,"_");
 		$filename = preg_replace("/[\\/\\\\]/",'_',$filename);
 		$filename = preg_replace('/[\x00-\x1F\x7F]/','_',$filename);
-		if(mb_strlen($filename)>100){
-			$filename = mb_substr($filename,-100);
-		}
 		if($filename===""){ $filename = "_"; }
 		if($filename==="."){ $filename = "_"; }
 		if($filename===".."){ $filename = "__"; }
+		if(mb_strlen($filename)>100){
+			$filename = mb_substr($filename,-100);
+		}
 		return $filename;
 	}
 }
