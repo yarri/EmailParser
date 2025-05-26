@@ -73,6 +73,10 @@ class ParsedEmailPart {
 		return $this->struct["charset"];
 	}
 
+	function getDeclaredCharset(){
+		return $this->struct["declared_charset"];
+	}
+
 	function getParentPart(){
 		$parents = [];
 		foreach($this->email->getParts() as $part){

@@ -267,6 +267,20 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 		$this->assertEquals(146,$parts[2]->getSize());
 	}
 
+	function test_latin_2(){
+		$parser = new Yarri\EmailParser();
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/latin_2.eml");
+
+		$this->assertEquals("Re: Odesílání e-mailu: HLÁŠENÍ  O  POŽÁRU__1.doc",$email->getSubject());
+		$this->assertEquals('"Martin Petřík" <martin.petrik@firehlaseni.cz>',$email->getFrom());
+
+		$parts = $email->getParts();
+
+		$this->assertEquals("UTF-8",$parts[0]->getCharset());
+		$this->assertEquals("iso-8859-2",$parts[0]->getDeclaredCharset());
+		$this->assertStringContains("V kolonce výše škody odhadněte požárem způsobenou škodu na Vašem majetku",$parts[0]->getContent());
+	}
+
 	function test_spam_with_invalid_subject(){
 		$email_content = Files::GetFileContent(__DIR__ . "/sample_emails/spam_with_invalid_subject.txt");
 		$parser = new Yarri\EmailParser();

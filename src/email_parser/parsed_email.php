@@ -60,27 +60,45 @@ class ParsedEmail {
 			throw new InvalidEmailSourceException();
 		}
 
-		$first = true;
+		$this->_fillStruct($structure);
+
+		$content_charset = null;
+		foreach($this->getParts() as $part){
+			if(in_array($part->getMimeType(),["text/html","text/plain"]) && !$part->getFilename() && $part->getDeclaredCharset()){
+				$content_charset = $part->getDeclaredCharset();
+				break;
+			}
+		}
+
+		$fix_encoding = function($value) use($content_charset){
+			if(!\Translate::CheckEncoding($value,"UTF-8") && $content_charset){
+				$_value = \Translate::Trans($value,$content_charset,"UTF-8");
+				if(\Translate::CheckEncoding($_value,"UTF-8")){
+					return $_value;
+				}
+			}
+			$value = \Yarri\Utf8Cleaner::Clean($value);
+			return $value;
+		};
+
 		foreach($structure->headers as $key => $value){
 			$key = trim($key);
-			$key = \Yarri\Utf8Cleaner::Clean($key);
+			$key = $fix_encoding($key);
 			$key = mb_strtolower($key);
 			$key = str_replace("-","_",$key); // "message-id" => "message_id"
 			
 			if(is_array($value)){
-				$value = array_map(function($item){ return \Yarri\Utf8Cleaner::Clean($item); },$value);
+				$value = array_map(function($item) use($fix_encoding){ return $fix_encoding($item); },$value);
 				$this->headers[$key] = $value;
 				continue;
 			}
 
 			$value = trim($value);
-			$value = \Yarri\Utf8Cleaner::Clean($value);
+			$value = $fix_encoding($value);
 
 			$this->headers[$key] = $value;
 			continue;
 		}
-		
-		$this->_fillStruct($structure);
 
 		$this->_writeCache();
 	}
@@ -99,6 +117,7 @@ class ParsedEmail {
 
 		$declared_mime_type = null;
 		$charset = null;
+		$declared_charset = null;
 		$name = null; // nazev soubodu
 		$level = $this->level_counter;
 		$id = false;
@@ -118,6 +137,7 @@ class ParsedEmail {
 			}
 			if(isset($structure->ctype_parameters["charset"])){
 				$charset = strtolower(trim($structure->ctype_parameters["charset"]));
+				$declared_charset = $charset;
 			}
 			if(isset($structure->content_id)){
 				$content_id = $structure->content_id; // TODO: toto tu je z puvodniho listonose... nastane to nekdy? :)
@@ -160,6 +180,7 @@ class ParsedEmail {
 				"mime_type" => $mime_type,
 				"declared_mime_type" => $declared_mime_type,
 				"charset" => $charset,
+				"declared_charset" => $declared_charset,
 				"name" => $name,
 				"content_id" => $content_id,
 				"level" => $this->level_counter,
