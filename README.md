@@ -94,7 +94,7 @@ Usage
     $email = $parser->parseFile("/path/to/email_3.eml.gz","/path/to/cache/for_email_3/");
 
     // Displaying attachment via StringBuffer which is memory more efficient
-    // (only takes effect when caching is enabled)
+    // (only takes effect when caching is active)
     header(sprintf('Content-Type: %s',$part->getMimeType());
     header(sprintf('Content-Disposition: attachment; filename="%s"',$part->getFilename()));
     $buffer = $part->getContentBuffer();
