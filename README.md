@@ -5,11 +5,27 @@ EmailParser
 
 Parses emails, parses them well :)
 
+EmailParser tries to simplify some of the pains in the email parsing process:
+
+* All headers, text/plain and text/html parts (which are not attachments) and filenames of attachments are converted into UTF-8 encoding.
+* In these components, illegal UTF-8 characters are replaced.
+* Attachment filenames are properly sanitized.
+* Email can be parsed by its source or by its filename.
+* The email source file can be gzipped.
+* In EmailParser, an caching mechanism is built-in.
+* Contents of attachments can be accessd via [StringBuffer](https://packagist.org/packages/atk14/string-buffer) which has a positive impact on memory consumption.
+
 Usage
 -----
 
     $parser = new \Yarri\EmailParser();
+
+    // Parsing email
     $email = $parser->parse($email_content);
+    // or
+    $email = $parser->parseFile("/path/to/email.eml");
+    // or
+    $email = $parser->parseFile("/path/to/email.eml.gz");
     
     // Getting headers
     $email->getSubject();
@@ -21,15 +37,19 @@ Usage
     $email->getHeader("Subject"); // same as $email->getSubject()
     $email->getHeader("Received"); // returns string
     $email->getHeader("Received",["as_array" => true]); // returns array of strings
+    $email->hasAttachment(); // true of false
 
-    // Displayin the message
-    $part_message = $email->getFirstReadablePart();
+    // Displaying the message
+    $part = $email->getFirstReadablePart();
     // or
-    $part_message = $email->getFirstReadablePart(["prefer_html" => true]);
-
-    $part_message->getMimeType(); // "text/plain" or "text/html"
-    $part_message->getCharset(); // always "UTF-8"
-    $part_message->getContent();
+    $part = $email->getFirstReadablePart(["prefer_html" => true]);
+    //
+    header(sprintf(
+      "Content-Type: %s; charset=%s",
+      $part->getMimeType(), // "text/plain" or "text/html"
+      $part->getCharset() // always "UTF-8"
+    ));
+    echo $part->getContent();
 
     // Traversing email structure
     $parts = $email->getParts();
@@ -50,19 +70,35 @@ Usage
     }
 
     // Something like this can be printed:
-
+    /*
     1. multipart/related (no content)
     2.  multipart/alternative (no content)
     3.   text/plain (55 bytes)
     4.   text/html (107 bytes)
     5.  image/png (11462 bytes, dungeon-master.png)
     6.  image/jpeg (9123 bytes, pigeon.jpg)
+    // */
 
     // Getting parts
     $part = $email->getPartById(5);
     $part->isAttachment(); // true
     $part->getMimeType(); // "image/png"
     $part->getContent(); // binary content
+
+    // Caching mechanism
+    // (you are responsible for providing specific cache path for every email you want to parse)
+    $email = $parser->parse($email_1_content,"/path/to/cache/for_email_1/");
+    // or
+    $email = $parser->parseFile("/path/to/email_2.eml","/path/to/cache/for_email_2/");
+    // or
+    $email = $parser->parseFile("/path/to/email_3.eml.gz","/path/to/cache/for_email_3/");
+
+    // Displaying attachment via StringBuffer which is memory more efficient
+    // (only takes effect when caching is enabled)
+    header(sprintf('Content-Type: %s',$part->getMimeType());
+    header(sprintf('Content-Disposition: attachment; filename="%s"',$part->getFilename()));
+    $buffer = $part->getContentBuffer();
+    $buffer->printOut();
 
 Installation
 ------------
