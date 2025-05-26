@@ -15,6 +15,7 @@ class ParsedEmail {
 	protected $id_counter = 1;
 	protected $level_counter = 0;
 
+	protected $declared_charset = "";
 
 	function __construct(\Yarri\EmailParser $parser, string $cache_dir = ""){
 		$this->parser = $parser;
@@ -130,10 +131,10 @@ class ParsedEmail {
 				$declared_mime_type = strtolower(trim($structure->ctype_primary)."/".trim($structure->ctype_secondary));
 			}
 			if(isset($structure->ctype_parameters["name"]) && $name==""){
-				$name = self::_CorrectFilename($structure->ctype_parameters["name"]);
+				$name = self::_CorrectFilename($structure->ctype_parameters["name"],$this->declared_charset);
 			}
 			if(isset($structure->d_parameters["filename"]) && $name==""){
-				$name = self::_CorrectFilename($structure->d_parameters["filename"]);
+				$name = self::_CorrectFilename($structure->d_parameters["filename"],$this->declared_charset);
 			}
 			if(isset($structure->ctype_parameters["charset"])){
 				$charset = strtolower(trim($structure->ctype_parameters["charset"]));
@@ -176,7 +177,11 @@ class ParsedEmail {
 				$mime_type = $mime_type ? $mime_type : $declared_mime_type;
 			}
 
-			$this->struct[] = array(
+			if(in_array($mime_type,["text/plain","text/html"]) && !$this->declared_charset && $declared_charset && !$name){
+				$this->declared_charset = $declared_charset;
+			}
+
+			$this->struct[] = [
 				"mime_type" => $mime_type,
 				"declared_mime_type" => $declared_mime_type,
 				"charset" => $charset,
@@ -189,7 +194,7 @@ class ParsedEmail {
 				"body_included" => $body_included,
 				"body" => $_body,
 				"size" => $size,
-			);
+			];
 
 			if(isset($structure->parts)){
 				for($i=0;$i<sizeof($structure->parts);$i++){
@@ -340,9 +345,17 @@ class ParsedEmail {
 		return false;
 	}
 
-	static function _CorrectFilename($filename){
+	static function _CorrectFilename($filename,$declared_charset = ""){
 		if(is_null($filename)){ return null; }
 		$filename = trim((string)$filename);
+
+		if(!\Translate::CheckEncoding($filename,"UTF-8") && $declared_charset){
+			$_filename = \Translate::Trans($filename,$declared_charset,"UTF-8");
+			if(!\Translate::CheckEncoding($_filename,"UTF-8")){
+				$filename = $_filename;
+			}
+		}
+
 		$filename = \Yarri\Utf8Cleaner::Clean($filename,"_");
 		$filename = preg_replace("/[\\/\\\\]/",'_',$filename);
 		$filename = preg_replace('/[\x00-\x1F\x7F]/','_',$filename);
