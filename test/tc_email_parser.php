@@ -382,11 +382,14 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 
 		date_default_timezone_set("America/Los_Angeles");
 		$this->assertEquals("2025-05-01 11:22:13",$email->getDate());
+		$this->assertEquals("Thu, 01 May 2025 14:22:13 -0400",$email->getHeader("date"));
 
 		date_default_timezone_set("Europe/Prague");
 		$this->assertEquals("2025-05-01 20:22:13",$email->getDate());
+		$this->assertEquals("Thu, 01 May 2025 14:22:13 -0400",$email->getHeader("date"));
 
 		date_default_timezone_set("UTC");
 		$this->assertEquals("2025-05-01 18:22:13",$email->getDate());
+		$this->assertEquals("Thu, 01 May 2025 14:22:13 -0400",$email->getHeader("date"));
 	}
 }
