@@ -344,7 +344,7 @@ class ParsedEmail {
 		$html = null;
 		foreach($html_parts as $part){
 			$html = $part;
-			if(strlen(trim($plain->getContent()))){ break; }
+			if(strlen(trim($html->getContent()))){ break; }
 		}
 
 		return (!$plain || ($options["prefer_html"] && $html)) ? $html : $plain; 
