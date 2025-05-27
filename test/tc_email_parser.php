@@ -336,6 +336,24 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 		$this->assertEquals("Test\n",$parts[0]->getContent());
 	}
 
+	function test_text_plain_forwarded_as_attachment(){
+		$parser = new Yarri\EmailParser();
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/text_plain_forwarded_as_attachment.txt");
+
+		$parts = $email->getParts();
+
+		$this->assertEquals(4,sizeof($parts));
+
+		$this->assertEquals("multipart/mixed",$parts[0]->getMimeType());
+		$this->assertEquals("text/plain",$parts[1]->getMimeType());
+		$this->assertEquals("message/rfc822",$parts[2]->getMimeType());
+		$this->assertEquals("text/plain",$parts[3]->getMimeType());
+
+		$part = $email->getFirstReadablePart();
+		$this->assertEquals(4,$part->getId());
+		$this->assertStringContains("Děkuji",$part->getContent());
+	}
+
 	function test_getFirstReadablePart(){
 		$parser = new Yarri\EmailParser();
 

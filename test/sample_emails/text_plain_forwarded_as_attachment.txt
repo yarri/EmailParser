@@ -1,0 +1,142 @@
+Return-Path: <jaromir.tomek@gmail.com>
+X-Original-To: yarri@listonos.cz
+Delivered-To: yarri@listonos.cz
+Received: from localhost (localhost [127.0.0.1])
+	by cloudkicker.plovarna.cz (Postfix) with ESMTP id A103D39C96
+	for <yarri@listonos.cz>; Tue, 27 May 2025 10:28:45 +0200 (CEST)
+X-Virus-Scanned: Debian amavisd-new at cloudkicker.plovarna.cz
+Received: from cloudkicker.plovarna.cz ([127.0.0.1])
+	by localhost (cloudkicker.plovarna.cz [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id amyg49sMGNpg for <yarri@listonos.cz>;
+	Tue, 27 May 2025 10:28:45 +0200 (CEST)
+Received: from mail-ed1-f45.google.com (mail-ed1-f45.google.com [209.85.208.45])
+	by cloudkicker.plovarna.cz (Postfix) with ESMTPS id 2A08039C39
+	for <yarri@listonos.cz>; Tue, 27 May 2025 10:28:45 +0200 (CEST)
+Received: by mail-ed1-f45.google.com with SMTP id 4fb4d7f45d1cf-601dfef6a8dso5163082a12.1
+        for <yarri@listonos.cz>; Tue, 27 May 2025 01:28:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20230601; t=1748334524; x=1748939324; darn=listonos.cz;
+        h=in-reply-to:from:to:content-language:subject:references:user-agent
+         :mime-version:date:message-id:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=eeWW+7aA63B6gN/R+aCZ0pnztCgTEziYvmcASjtxX5E=;
+        b=Rjzy4w+4dM+PagthYYUAqx7fVmyweXcc/yPE9jVEtmOkHA5xq7EQJ2GcdqkkfIG77J
+         siZa0hjpHheibbPnvQ1/FS+SWIU+KOtbXGldVQ7AvaV3ubVuGr4IL4OCxNc3Q2cMd2Bc
+         D/r+XoS/OvJLYHykc1nLpJOX4dCgixSxeMeyVJ20u7u8mScAg9beqTh9kE8xJcEvwMb+
+         oeHyLVohYwjO0fCHINKemBgL/nnsqSdVk1rXENVzk3v1iEZn+bPVTt2td+BFlkD1Wnov
+         /x2zEE4g8qFDGNr8Oci3kHAKciLy/Oyd3Abeo9mIgJTfzBqJxvMaDpbkBKnayyKAx5aL
+         +YGg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1748334524; x=1748939324;
+        h=in-reply-to:from:to:content-language:subject:references:user-agent
+         :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=eeWW+7aA63B6gN/R+aCZ0pnztCgTEziYvmcASjtxX5E=;
+        b=SQ/NGX4WzSOhhdP2Co6uPCBZU/z3gRt1vaQF55467cQL8F9OYMgQ6JUvKyAywEElgc
+         NWIPjzeW0dCgA4jKAKsiJEAMYdqXCOn6Ioylkl8LtTnzBzTlbIuhShB+CNeJJ1N7KY4z
+         jKVZfcOfAPxV8GX734mDqMbDEALvG7yMxkIVcAIu/96Pt4iAhPWdFt6+EqkoADYxj4QM
+         FWbNfFTOay7CTMmXP5NHWPnaOc1ASw5erS2ilMFgAeBhVndz51dsQLKddZan6mcFjsSB
+         5lVtXjhwYCcGqwS4KdhQBM5sIxVTziMx7XZm9Wzut4qd7xID91ZbYa6UFAOSDpoglPVF
+         a1NQ==
+X-Gm-Message-State: AOJu0Yxed9CZbMMF1HD9mN8b7d0G9tv+DlVRL0CLYaGj7pY5aAQg/J6N
+	HT0JcJeHM5hBtgSvPAIz36yFt4zZkUcEgJNIoGGrR8AO0D09mry45D9kx7/swQ==
+X-Gm-Gg: ASbGncvOt85/vjeuaEEHM6HKvfiusAYARoADdb219PWw58s010xvK62XiGBknyr/zmd
+	YL1/BzI+d/+ryUlrSGgBPgeQXZGaO/II2RveScXyJ3c9kS2hTesqBfjSkspuLfw5c/s/VzfOlAU
+	BKvOsYtjSPBkZEAjEl45WPYGeefY3A6pmvpRpmBzztjIpHxXWy+SWgAeHJcnxXZlObdQfJ9OvXp
+	Ydx6iuhzfsbmZiL6zmsuA/Qer/hz+WqBIYiZpt1Bi+NvV6BEQ/DymX8F2FZFNjtJ9Hhpv2nB90V
+	E3pXbzhAQRYWfXDaBgHSHvWbxQ5PLWJcAkYciQptwy2ioGF/Sg0wEinSbSY1hEJ/9DPzJs+OioG
+	lbysqNt4IYimeGF2D0TCVz4A/VrOFwRE=
+X-Google-Smtp-Source: AGHT+IFoIJm5NkSTq7S4a6sGfeKp26xWZtEph8s3n65aL2p2AZM6AhwUhvc1pnHyooQ3rlyRLfeZaA==
+X-Received: by 2002:a17:907:96a8:b0:ad5:4920:bd8e with SMTP id a640c23a62f3a-ad85b03aec4mr1075842666b.1.1748334524115;
+        Tue, 27 May 2025 01:28:44 -0700 (PDT)
+Received: from [10.144.5.91] (static-84-42-151-170.bb.vodafone.cz. [84.42.151.170])
+        by smtp.googlemail.com with ESMTPSA id 4fb4d7f45d1cf-6045c6d25dcsm4111347a12.8.2025.05.27.01.28.43
+        for <yarri@listonos.cz>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 May 2025 01:28:43 -0700 (PDT)
+Content-Type: multipart/mixed; boundary="------------whmGvvuAlF4vHUCc9HYge56T"
+Message-ID: <7428c25b-7c59-470c-9a5d-dbe8580dae73@gmail.com>
+Date: Tue, 27 May 2025 10:28:42 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+References: <20250526122035.F40303B5B@cloudkicker.plovarna.cz>
+Subject: Fwd: Re: Friends
+Content-Language: en-US
+To: Jaromir Tomek <yarri@listonos.cz>
+From: Jaromir Tomek <jaromir.tomek@gmail.com>
+In-Reply-To: <20250526122035.F40303B5B@cloudkicker.plovarna.cz>
+X-Forwarded-Message-Id: <20250526122035.F40303B5B@cloudkicker.plovarna.cz>
+
+This is a multi-part message in MIME format.
+--------------whmGvvuAlF4vHUCc9HYge56T
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+
+--------------whmGvvuAlF4vHUCc9HYge56T
+Content-Type: message/rfc822; name="Re: Friends.eml"
+Content-Disposition: attachment; filename="Re: Friends.eml"
+Content-Transfer-Encoding: 7bit
+
+Delivered-To: jaromir.tomek@gmail.com
+Received: by 2002:a05:6359:1905:b0:1eb:a36e:6865 with SMTP id mf5csp4140572rwb;
+        Mon, 26 May 2025 05:20:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENaFRedfte/Llrz3838PYQLc+7/tbvTAzXUOLqwmDf0E9+Qp+Jmp6zibrjlSOWxtGn4Ive
+X-Received: by 2002:a17:907:6d0c:b0:acb:33c6:5c71 with SMTP id a640c23a62f3a-ad85b11154fmr761792566b.29.1748262036361;
+        Mon, 26 May 2025 05:20:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1748262036; cv=none;
+        d=google.com; s=arc-20240605;
+        b=Jmun2iHSOHAGOeSFxbRv85hPaK6l9wGmFp+oQjmOtJuA2n5D34odNYtANufkO07pat
+         xbGILwC3wBCJ11HP+cQq6k+5EYavbg5irfnyAwwrzxgR2QStia2lQToFpclvBMwUXGc+
+         TfQglnT+RjpQkW1P4VrT4YatDx1SMUXFYU8vbddJTNJvDlXH6kiNFcGoJbEe63CmTOsb
+         XkLWH6gsHodZMX7SwZK+JF+2Ap12Rwm8dE6zBxzbytLAXJNBpPBdTDTHquNHau91+oHG
+         NtEftjd2ZSDrvM3YJbKIRSSkavess5X2Qww71WhgKtRaoNDd4Z+MmSZ6gujpkwAHyAnS
+         LaVg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:date:content-transfer-encoding:mime-version:reply-to
+         :from:subject:to;
+        bh=8bDWxOA/2uPMTrezMdoZApbIuiOffeQPxW3fgpOpV2o=;
+        fh=A56BSeVLBEStam5r1wtMoT71HikLj6yg1/Xf3GFX3Z0=;
+        b=NUcL6G3nBWZOi0PSbwc1WWsjwyxGdLETnEd0/ZpnQDQIyah6lFPiDLjYvoUzOlX48B
+         VRVeTup4Cunc5nzvh//S0XFEbQVfXzwym+ZOI+IAZXhAbGtAwmF55aqRuF4/BMS8SSOk
+         GzQqAgNTKibusPkRyTxB/dp71s3+mJeWf7eVyOBnFARu1dpTlYVj1WfJQY+loPWieWo0
+         U4wVYrQ2vlWQC/X107JqXhqSM+FxwWg75oKiMHiAZfEjJ8+excfS5kfJwFX2tVDdCNB6
+         fspAjkBUE8UqiMeOk1hg+2tnz3Rny1t3jp1wCbjBVyooANQWmj/+BXdWTxVZYX6WtF4A
+         rk6g==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       spf=pass (google.com: domain of yarri@phyllostomus.com designates 159.89.102.188 as permitted sender) smtp.mailfrom=yarri@phyllostomus.com
+Return-Path: <yarri@phyllostomus.com>
+Received: from cloudkicker.plovarna.cz (cloudkicker.plovarna.cz. [159.89.102.188])
+        by mx.google.com with ESMTP id a640c23a62f3a-ad52d4b21cesi1618467666b.259.2025.05.26.05.20.36
+        for <jaromir.tomek@gmail.com>;
+        Mon, 26 May 2025 05:20:36 -0700 (PDT)
+Received-SPF: pass (google.com: domain of yarri@phyllostomus.com designates 159.89.102.188 as permitted sender) client-ip=159.89.102.188;
+Authentication-Results: mx.google.com;
+       spf=pass (google.com: domain of yarri@phyllostomus.com designates 159.89.102.188 as permitted sender) smtp.mailfrom=yarri@phyllostomus.com
+Received: by cloudkicker.plovarna.cz (Postfix, from userid 33)
+	id F40303B5B; Mon, 26 May 2025 14:20:35 +0200 (CEST)
+To: Jaromir Tomek <jaromir.tomek@gmail.com>
+Subject: RE: Friends
+From: "Jaromir \"aka\" Mr. Hlina Tomek" <yarri@phyllostomus.com>
+Reply-To: "Jaromir \"aka\" Mr. Hlina Tomek" <yarri@phyllostomus.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Mon, 26 May 2025 12:20:35 GMT
+Message-Id: <20250526122035.F40303B5B@cloudkicker.plovarna.cz>
+
+D=C4=9Bkuji.
+
+--
+Cowboy!
+Digital Indian!
+
+Dne: 26.=C2=A05.=C2=A02025 13:46,
+Jaromir Tomek <jaromir.tomek@gmail.com> napsal:
+
+> Tady to je! :)
+>=20
+> J.
+
+--------------whmGvvuAlF4vHUCc9HYge56T--

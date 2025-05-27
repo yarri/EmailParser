@@ -170,7 +170,7 @@ class ParsedEmail {
 			$this->id_counter++;
 
 			$mime_type = $declared_mime_type;
-			if($declared_mime_type && !(strlen($name)===0 && strlen($_body)===0) && !(in_array($declared_mime_type,["text/plain","text/html"]) && !strlen($name))){
+			if($declared_mime_type && $has_content && !(strlen($name)===0 && strlen($_body)===0) && !(in_array($declared_mime_type,["text/plain","text/html"]) && !strlen($name))){
 				$_file = \Files::WriteToTemp($_body,$err,$err_msg);
 				$mime_type = \Files::DetermineFileType($_file,["original_filename" => $name]);
 				\Files::Unlink($_file);
@@ -328,13 +328,25 @@ class ParsedEmail {
 		$options += [
 			"prefer_html" => false,
 		];
-		$plain = $html = null;
+
+		$plain_parts = $html_parts = [];
 		foreach($this->getParts() as $part){
-			if($plain && $html){ break; }
 			if(!in_array($part->getMimeType(),["text/plain","text/html"]) || strlen((string)$part->getFilename())){ continue; }
-			if($part->getMimeType()=="text/plain" && !$plain){ $plain = $part; continue; }
-			if($part->getMimeType()=="text/html" && !$html){ $html = $part; continue; }
+			if($part->getMimeType()=="text/plain"){ $plain_parts[] = $part; continue; }
+			if($part->getMimeType()=="text/html"){ $html_parts[] = $part; continue; }
 		}
+
+		$plain = null;
+		foreach($plain_parts as $part){
+			$plain = $part;
+			if(strlen(trim($plain->getContent()))){ break; }
+		}
+		$html = null;
+		foreach($html_parts as $part){
+			$html = $part;
+			if(strlen(trim($plain->getContent()))){ break; }
+		}
+
 		return (!$plain || ($options["prefer_html"] && $html)) ? $html : $plain; 
 	}
 
