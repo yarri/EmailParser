@@ -12,6 +12,7 @@ EmailParser tries to simplify some of the pains in the email parsing process:
 * Attachment filenames are properly sanitized.
 * Email can be parsed by its source or by its filename.
 * The email source file can be gzipped.
+* EmailParser itself determines mime types of attachments.
 * In EmailParser, a caching mechanism is built-in.
 * Contents of attachments can be accessd via [StringBuffer](https://packagist.org/packages/atk14/string-buffer) which has a positive impact on memory consumption.
 
