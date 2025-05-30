@@ -86,6 +86,20 @@ Usage
     $part->getMimeType(); // "image/png"
     $part->getContent(); // binary content
 
+    // Email sent as an attachment
+    $email = $parser->parseFile("/path/to/email_with_message_rfc822_part.eml");
+
+    $parts = $email->getParts();
+    $part_message_rfc822 = $parts[2]; // for instance the 3rd part is message/rfc822, i.e. an attached email
+    $part_message_rfc822->isAttachedEmail(); // true
+    $attached_email = $part_message_rfc822->getAttachedEmail();
+
+    $attached_email->getSubject();
+    $attached_email->getFrom();
+    $attached_email->getTo();
+    $attached_email_parts = $attached_email->getParts();
+    // etc.
+
     // Caching mechanism
     // (you are responsible for providing specific cache path for every email you want to parse)
     $email = $parser->parse($email_1_content,"/path/to/cache/for_email_1/");
