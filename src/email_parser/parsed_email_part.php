@@ -77,6 +77,10 @@ class ParsedEmailPart {
 		return $this->struct["declared_charset"];
 	}
 
+	function getHeaders(){
+		return $this->struct["headers"];
+	}
+
 	function getParentPart(){
 		$parents = [];
 		foreach($this->email->getParts() as $part){
@@ -86,6 +90,24 @@ class ParsedEmailPart {
 			}
 			$parents[$l] = $part;
 		}
+	}
+
+	function getChildParts(){
+		$level = $this->getLevel();
+		$got_me = false;
+		
+		$children = [];
+		foreach($this->email->getParts() as $part){
+			if($part->getId()==$this->getId()){ $got_me = true; continue; }
+			if($got_me && $level<$part->getLevel()){
+				$children[] = $part;
+				continue;
+			}
+			if(!$got_me){ continue; }
+			break;
+		}
+
+		return $children;
 	}
 
   function isAttachment(){
@@ -101,9 +123,24 @@ class ParsedEmailPart {
     return false;
   }
 
+	function isAttachedEmail(){
+		return $this->getMimeType()==="message/rfc822";
+	}
+
+	function getAttachedEmail(){
+		if(!$this->isAttachedEmail()){
+			return null;
+		}
+		$parts = $this->getChildParts();
+		$email = $this->email;
+		return new AttachedEmail($email->getParser(),$email->getCacheDir(),$parts);
+	}
+
+	/*
 	function toArray(){
 		return $this->struct;
 	}
+	*/
 
 	function __toString(){ return (string)$this->getContent(); }
 }

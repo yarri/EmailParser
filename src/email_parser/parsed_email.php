@@ -8,9 +8,10 @@ class ParsedEmail {
 	protected $parser;
 	protected $cache_dir = ""; // path to a cache directory for the given email
 
-	protected $size = 0;
+	protected $size = null;
 	protected $headers = [];
 	protected $struct = [];
+	protected $parts = [];
 
 	protected $id_counter = 1;
 	protected $level_counter = 0;
@@ -61,53 +62,21 @@ class ParsedEmail {
 			throw new InvalidEmailSourceException();
 		}
 
+		//print_r($structure);
+		//exit;
+
 		$this->_fillStruct($structure);
 
-		$content_charset = null;
-		foreach($this->getParts() as $part){
-			if(in_array($part->getMimeType(),["text/html","text/plain"]) && !$part->getFilename() && $part->getDeclaredCharset()){
-				$content_charset = $part->getDeclaredCharset();
-				break;
-			}
-		}
-
-		$fix_encoding = function($value) use($content_charset){
-			if(!\Translate::CheckEncoding($value,"UTF-8") && $content_charset){
-				$_value = \Translate::Trans($value,$content_charset,"UTF-8");
-				if(\Translate::CheckEncoding($_value,"UTF-8")){
-					return $_value;
-				}
-			}
-			$value = \Yarri\Utf8Cleaner::Clean($value);
-			return $value;
-		};
-
-		foreach($structure->headers as $key => $value){
-			$key = trim($key);
-			$key = $fix_encoding($key);
-			$key = mb_strtolower($key);
-			$key = str_replace("-","_",$key); // "message-id" => "message_id"
-			
-			if(is_array($value)){
-				$value = array_map(function($item) use($fix_encoding){ return $fix_encoding($item); },$value);
-				$this->headers[$key] = $value;
-				continue;
-			}
-
-			$value = trim($value);
-			$value = $fix_encoding($value);
-
-			$this->headers[$key] = $value;
-			continue;
-		}
+		$this->headers = $this->_parseHeaders($structure);
 
 		$this->_writeCache();
 	}
 
 	function _reset(){
-		$this->size = 0;
+		$this->size = null;
 		$this->headers = [];
 		$this->struct = [];
+		$this->parts = [];
 		$this->id_counter = 1;
 		$this->level_counter = 0;
 	}
@@ -126,6 +95,7 @@ class ParsedEmail {
 		$body = null;
 		$size = 0;
 		$content_id = null;
+		$headers = [];
 		if($object){
 			if(isset($structure->ctype_primary) && isset($structure->ctype_secondary)){
 				$declared_mime_type = strtolower(trim($structure->ctype_primary)."/".trim($structure->ctype_secondary));
@@ -144,6 +114,10 @@ class ParsedEmail {
 				$content_id = $structure->content_id; // TODO: toto tu je z puvodniho listonose... nastane to nekdy? :)
 			}elseif(isset($structure->headers["content-id"])){
 				$content_id = $structure->headers["content-id"];
+			}
+
+			if(isset($structure->headers)){
+				$headers = $this->_parseHeaders($structure);
 			}
 			
 			$_body = null;
@@ -194,6 +168,7 @@ class ParsedEmail {
 				"body_included" => $body_included,
 				"body" => $_body,
 				"size" => $size,
+				"headers" => $headers,
 			];
 
 			if(isset($structure->parts)){
@@ -273,7 +248,7 @@ class ParsedEmail {
 	
 	function _getCacheFilenameForPart($id){
 		return $this->_getCacheDir()."/parts/".$id.".cache";
-	}
+	}	
 
 	function getHeader($key,$options = []){
 		$options += [
@@ -281,7 +256,6 @@ class ParsedEmail {
 		];
 
 		$key = strtolower($key);
-		$key = str_replace('-','_',$key); // "message-id" => "message_id"
 		if(!isset($this->headers[$key])){ return $options["as_array"] ? [] : null; }
 		$header = $this->headers[$key];
 		if(!$options["as_array"] && is_array($header)){
@@ -305,11 +279,11 @@ class ParsedEmail {
 	function getSize(){ return $this->size; }
 
 	function getParts(){
-		$parts = [];
+		if($this->parts){ return $this->parts; }
 		foreach($this->struct as $struct){
-			$parts[] = new ParsedEmailPart($this,$struct);
+			$this->parts[] = new ParsedEmailPart($this,$struct);
 		}
-		return $parts;
+		return $this->parts;
 	}
 
 	function getPartById(int $id){
@@ -378,5 +352,80 @@ class ParsedEmail {
 			$filename = mb_substr($filename,-100);
 		}
 		return $filename;
+	}
+
+	function _getContentCharset(&$structure){
+		$mime_type = null;
+		$filename = null;
+		$charset = null;
+		if(isset($structure->ctype_primary) && isset($structure->ctype_secondary)){
+			$mime_type = strtolower(trim($structure->ctype_primary)."/".trim($structure->ctype_secondary));
+		}
+		if(isset($structure->ctype_parameters["name"])){
+			$filename = $structure->ctype_parameters["name"];
+		}
+		if(isset($structure->d_parameters["filename"])){
+			$filename = $structure->d_parameters["filename"];
+		}
+		if(isset($structure->ctype_parameters["charset"])){
+			$charset = strtolower(trim($structure->ctype_parameters["charset"]));
+		}
+
+		if(in_array($mime_type,["text/html","text/plain"]) && !$filename && $charset){
+			return $charset;
+		}
+		
+		if(isset($structure->parts)){
+			foreach($structure->parts as &$part){
+				$charset = $this->_getContentCharset($part);
+				if($charset){ return $charset; }
+			}
+		}
+	}
+
+	function _parseHeaders($structure){
+		if(!isset($structure->headers)){ return []; }
+
+		$content_charset = $this->_getContentCharset($structure);
+
+		$fix_encoding = function($value) use($content_charset){
+			if(!\Translate::CheckEncoding($value,"UTF-8") && $content_charset){
+				$_value = \Translate::Trans($value,$content_charset,"UTF-8");
+				if(\Translate::CheckEncoding($_value,"UTF-8")){
+					return $_value;
+				}
+			}
+			$value = \Yarri\Utf8Cleaner::Clean($value);
+			return $value;
+		};
+
+		$headers = [];
+		foreach($structure->headers as $key => $value){
+			$key = trim($key);
+			$key = $fix_encoding($key);
+			$key = mb_strtolower($key);
+			
+			if(is_array($value)){
+				$value = array_map(function($item) use($fix_encoding){ return $fix_encoding($item); },$value);
+				$headers[$key] = $value;
+				continue;
+			}
+
+			$value = trim($value);
+			$value = $fix_encoding($value);
+
+			$headers[$key] = $value;
+			continue;
+		}
+
+		return $headers;
+	}
+
+	function getParser(){
+		return $this->parser;
+	}
+
+	function getCacheDir(){
+		return $this->cache_dir;
 	}
 }
