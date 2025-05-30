@@ -12,8 +12,9 @@ EmailParser tries to simplify some of the pains in the email parsing process:
 * Attachment filenames are properly sanitized.
 * Email can be parsed by its source or by its filename.
 * The email source file can be gzipped.
-* EmailParser itself determines mime types of attachments.
-* In EmailParser, a caching mechanism is built-in.
+* EmailParser itself determines mime types of all attachments found in the message.
+* An email sent as an attachment in another email can be easily accessed by calling $part->getAttachedEmail().
+* A caching mechanism is built-in in EmailParser.
 * Contents of attachments can be accessd via [StringBuffer](https://packagist.org/packages/atk14/string-buffer) which has a positive impact on memory consumption.
 
 Usage
