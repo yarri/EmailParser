@@ -40,6 +40,7 @@ Usage
     $email->getHeader("Received"); // returns string
     $email->getHeader("Received",["as_array" => true]); // returns array of strings
     $email->hasAttachment(); // true of false
+    $email->getSmtpRelayIps(); // e.g ["78.45.42.91","209.85.128.53"]
 
     // Displaying the message
     $part = $email->getFirstReadablePart();

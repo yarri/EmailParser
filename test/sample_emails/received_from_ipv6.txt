@@ -1,0 +1,51 @@
+Delivered-To: jaromir.tomek@gmail.com
+Received: by 2002:a05:6358:d5aa:b0:1eb:a36e:6865 with SMTP id ms42csp4737197rwb;
+        Thu, 3 Jul 2025 08:08:04 -0700 (PDT)
+X-Forwarded-Encrypted: i=2; AJvYcCXAvckKzN+qSjwdumhklHjZ+LvICBXTomm947c/dfV70DXBgbC/Y4uxS5mi+dxfUlvYHXz245iAot35NAl9@gmail.com
+X-Google-Smtp-Source: AGHT+IEkO5IRalaMdWl822Hv7c/IeWPiLdOs7/+MhKy+O8af6hfSoNtySoB5f/1Qvl7FSFEmeZzK
+X-Received: by 2002:a05:6000:4108:b0:3a4:f7af:b41 with SMTP id ffacd0b85a97d-3b32c197109mr3304623f8f.15.1751555284097;
+        Thu, 03 Jul 2025 08:08:04 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1751555284; cv=none;
+        d=google.com; s=arc-20240605;
+        b=MdosBmbcnyDtnBisJDW74NF8hFGFCu1ER49QdCa7V7nYgkOGTmn0ZgPKdnqJDbCiz+
+         BbQVHVguFC6JSkgmstPRrMUoxfRuEe4cqBHP5YuH+Hc0QgdsCpTYrzXid9NgUaMZzl2y
+         IPYKEa2b1BUdcKjAE043yntEQE9K6ChIXYdLQaTIwEbizbTLRGg0F6J4+iIoZZDEsoZU
+         oqE35+gfbfL2sC/aGSFf7UC10RE1VHMXhumgVMMMiZYpn1cEEPxIxAMGq0S4M8Tdm9Em
+         nG7BafJ7rqyP4FlqbiFdYcfuczxl41nFoCEvLfrdHtHwZE0f79Y0xuxakgSIDVvgY3GF
+         uD5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605;
+        h=message-id:date:content-transfer-encoding:mime-version:cc:reply-to
+         :from:subject:to;
+        bh=RO18x4JmGPi7P4m4a4dR7OpxAxpK6/OhNJfzEzKzlzE=;
+        fh=hhW/iIRwnHw/wjsQo0d/HeYeX8ZW4Hb/gLfRE1A8kn4=;
+        b=Wnv1ZRq3IIkPdQHtOuVVx7JfWh47yyahW4oeslvZ4vot3iiGBsYGM5gSD3v+esb3m8
+         j/AhJ4ywUUP5SzJyxA+EsWIxz1yy14RcQJ5ovUE8yaw7bQg6UPSBMmbk98MfqSgnsElK
+         Nm7KUhNMH8zyzq+DlrHCtLZ0F9daTVJchNrZ876IPOZdUdkKf+QcPvwowM+ymD3aGPTg
+         mIB9SdR/FtB/MxjU2GskvhEUxVpFfG5hdnGGzegWUPTVK+h/sJvFqGiIxqXAaAjgryXk
+         yaPZu22Q90Jbqsamt0tWsdrv4sneBeCPs0eIqU9qeyTg8GVxKVGNz168nR/N3/Aj2Fua
+         GHZA==;
+        dara=google.com
+ARC-Authentication-Results: i=1; mx.google.com;
+       spf=pass (google.com: domain of yarri@listonos.cz designates 89.187.145.110 as permitted sender) smtp.mailfrom=yarri@listonos.cz
+Return-Path: <yarri@listonos.cz>
+Received: from cirrus.plovarna.cz (cirrus.plovarna.cz. [89.187.145.110])
+        by mx.google.com with ESMTP id ffacd0b85a97d-3b4743602eesi5657f8f.479.2025.07.03.08.08.03
+        for <jaromir.tomek@gmail.com>;
+        Thu, 03 Jul 2025 08:08:03 -0700 (PDT)
+Received-SPF: pass (google.com: domain of yarri@listonos.cz designates 89.187.145.110 as permitted sender) client-ip=89.187.145.110;
+Authentication-Results: mx.google.com;
+       spf=pass (google.com: domain of yarri@listonos.cz designates 89.187.145.110 as permitted sender) smtp.mailfrom=yarri@listonos.cz
+Received: by cirrus.plovarna.cz (Postfix, from userid 33)
+	id 74BEF28034A; Thu,  3 Jul 2025 15:08:03 +0000 (UTC)
+To: "Jaromir Tomek" <jarek@plovarna.cz>, "JaromÃ­r Tomek" <jaromir.tomek@gmail.com>
+Subject: Super! :)
+From: "Jaromir Tomek" <yarri@listonos.cz>
+Reply-To: "Jaromir Tomek" <yarri@listonos.cz>
+Cc: yarri@listonos.cz
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Date: Thu, 03 Jul 2025 15:08:03 GMT
+Message-Id: <20250703150803.74BEF28034A@cirrus.plovarna.cz>
+
+TESTIK

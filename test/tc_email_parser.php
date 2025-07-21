@@ -410,4 +410,26 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 		$this->assertEquals("2025-05-01 18:22:13",$email->getDate());
 		$this->assertEquals("Thu, 01 May 2025 14:22:13 -0400",$email->getHeader("date"));
 	}
+
+	function test_getSmtpRelayIps(){
+		$parser = new Yarri\EmailParser();
+
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/hard_to_parse_1.txt");
+		$ips = $email->getSmtpRelayIps();
+		$this->assertEquals(["37.123.98.46"],$ips);
+
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/html_document_in_latin_2_encoding.txt.gz");
+		$ips = $email->getSmtpRelayIps();
+		$this->assertEquals([
+			"78.45.42.91",
+			"209.85.128.53"
+		],$ips);
+
+		$email = $parser->parseFile(__DIR__ . "/sample_emails/received_from_ipv6.txt");
+		$ips = $email->getSmtpRelayIps();
+		$this->assertEquals([
+			"89.187.145.110",
+			"2002:a05:6358:d5aa:b0:1eb:a36e:6865"
+		],$ips);
+	}
 }

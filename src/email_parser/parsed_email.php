@@ -331,6 +331,45 @@ class ParsedEmail {
 		return false;
 	}
 
+	/**
+	 * Returns an array of all SMTP server IP addresses (relay hops) from email headers
+	 *
+	 * @return string[]
+	 */
+	function getSmtpRelayIps(){
+		$headers = $this->getHeader("received",["as_array" => true]);
+
+		$ipv4 = '(?:\d{1,3}\.){3}\d{1,3}';
+		$ipv6 = '(?:[a-f0-9]{1,4}:){2,7}[a-f0-9]{1,4}';
+		$seprator = '[\s\[\]\(\),;]';
+
+		$out = [];
+		foreach($headers as $header){
+			$header = strtolower($header);
+			if(preg_match_all("/$seprator(?P<ip>$ipv4|$ipv6)$seprator/i", " $header ", $ips)){
+				foreach($ips["ip"] as $ip){
+					if(preg_match('/^\d+:\d+:\d+$/',$ip)){ continue; } // time, e.g. 20:29:18
+					if(self::_IsPrivateIp($ip)){ continue; }
+					$out[] = $ip;
+				}
+			}
+		}
+
+		$out = array_unique($out);
+		$out = array_reverse($out);
+
+		return $out;
+	}
+
+	static function _IsPrivateIp($ip){
+		// TODO: detect private IPv6 address
+		return
+			preg_match('/^10\./', $ip) ||
+			preg_match('/^192\.168\./', $ip) ||
+			preg_match('/^172\.(1[6-9]|2[0-9]|3[0-1])\./', $ip) ||
+			preg_match('/^127\./', $ip);
+	}
+
 	static function _CorrectFilename($filename,$declared_charset = ""){
 		if(is_null($filename)){ return null; }
 		$filename = trim((string)$filename);
