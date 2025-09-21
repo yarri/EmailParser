@@ -144,7 +144,7 @@ class ParsedEmail {
 			$this->id_counter++;
 
 			$mime_type = $declared_mime_type;
-			if($declared_mime_type && $has_content && !(strlen($name)===0 && strlen($_body)===0) && !(in_array($declared_mime_type,["text/plain","text/html"]) && !strlen($name))){
+			if($declared_mime_type && $has_content && !(strlen((string)$name)===0 && strlen((string)$_body)===0) && !(in_array($declared_mime_type,["text/plain","text/html"]) && !strlen((string)$name))){
 				$_file = \Files::WriteToTemp($_body,$err,$err_msg);
 				$mime_type = \Files::DetermineFileType($_file,["original_filename" => $name]);
 				\Files::Unlink($_file);
