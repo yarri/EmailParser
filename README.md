@@ -1,7 +1,7 @@
 EmailParser
 ===========
 
-[![Build Status](https://app.travis-ci.com/yarri/EmailParser.svg?token=Kc7UxgK5oqFG8sZAhCzg&branch=master)](https://app.travis-ci.com/yarri/EmailParser)
+[![Tests](https://github.com/yarri/EmailParser/actions/workflows/tests.yml/badge.svg)](https://github.com/yarri/EmailParser/actions/workflows/tests.yml)
 
 Parses emails, parses them well :)
 
