@@ -142,9 +142,9 @@ The EmailParser is tested automatically using GitHub Actions in PHP 7.0 to PHP 8
 
 For the tests execution, the package [atk14/tester](https://packagist.org/packages/atk14/tester) is used. It is just a wrapping script for [phpunit/phpunit](https://packagist.org/packages/phpunit/phpunit).
 
-Install required dependencies for development:
+Install required dependencies:
 
-    composer update --dev
+    composer update
 
 Run tests:
 
