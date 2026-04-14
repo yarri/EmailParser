@@ -3,7 +3,7 @@ EmailParser
 
 [![Tests](https://github.com/yarri/EmailParser/actions/workflows/tests.yml/badge.svg)](https://github.com/yarri/EmailParser/actions/workflows/tests.yml)
 
-Parses emails, parses them well :)
+Parses raw MIME email messages from strings or files into structured PHP objects, with automatic UTF-8 conversion, attachment detection, and built-in caching.
 
 EmailParser tries to simplify some of the pains in the email parsing process:
 

@@ -1,7 +1,7 @@
 {
         "name": "yarri/email-parser",
         "type": "library",
-        "description": "Parses emails, parses them well :)",
+        "description": "Parses raw MIME email messages from strings or files into structured PHP objects, with automatic UTF-8 conversion, attachment detection, and built-in caching",
         "keywords": [],
         "homepage": "https://github.com/yarri/EmailParser",
         "license": ["MIT"],
