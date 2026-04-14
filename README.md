@@ -15,7 +15,7 @@ EmailParser tries to simplify some of the pains in the email parsing process:
 * EmailParser itself determines mime types of all attachments found in the message.
 * An email sent as an attachment in another email can be easily accessed by calling $part->getAttachedEmail().
 * A caching mechanism is built-in in EmailParser.
-* Contents of attachments can be accessd via [StringBuffer](https://packagist.org/packages/atk14/string-buffer) which has a positive impact on memory consumption.
+* Contents of attachments can be accessed via [StringBuffer](https://packagist.org/packages/atk14/string-buffer) which has a positive impact on memory consumption.
 
 Usage
 -----
@@ -82,11 +82,22 @@ Usage
     6.  image/jpeg (9123 bytes, pigeon.jpg)
     // */
 
-    // Getting parts
+    // Navigating part relationships
+    $part = $email->getPartById(4); // text/html
+    $parent = $part->getParentPart(); // multipart/alternative
+    $siblings = $parent->getChildParts(); // [text/plain, text/html]
+
+    // Getting parts by id or Content-Id
     $part = $email->getPartById(5);
     $part->isAttachment(); // true
     $part->getMimeType(); // "image/png"
     $part->getContent(); // binary content
+
+    // Embedded images can be looked up by their Content-Id
+    $part = $email->getPartByContentId("unique-image-001@example.com");
+    $part->getContentId(); // "unique-image-001@example.com"
+    $part->getMimeType(); // "image/png"
+    $part->isAttachment(); // false (inline image inside multipart/related)
 
     // Email sent as an attachment
     $email = $parser->parseFile("/path/to/email_with_message_rfc822_part.eml");
@@ -112,8 +123,8 @@ Usage
 
     // Displaying attachment via StringBuffer which is memory more efficient
     // (only takes effect when caching is active)
-    header(sprintf('Content-Type: %s',$part->getMimeType());
-    header(sprintf('Content-Disposition: attachment; filename="%s"',$part->getFilename()));
+    header(sprintf('Content-Type: %s', $part->getMimeType()));
+    header(sprintf('Content-Disposition: attachment; filename="%s"', $part->getFilename()));
     $buffer = $part->getContentBuffer();
     $buffer->printOut();
 
@@ -127,7 +138,7 @@ Just use the Composer:
 Testing
 -------
 
-The EmailParser is tested automatically using Travis CI in PHP 7.0 to PHP 8.4.
+The EmailParser is tested automatically using GitHub Actions in PHP 7.0 to PHP 8.5.
 
 For the tests execution, the package [atk14/tester](https://packagist.org/packages/atk14/tester) is used. It is just a wrapping script for [phpunit/phpunit](https://packagist.org/packages/phpunit/phpunit).
 
