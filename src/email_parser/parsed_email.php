@@ -270,6 +270,14 @@ class ParsedEmail {
 	function getSubject(){ return $this->getHeader("subject"); }
 	function getFrom(){ return $this->getHeader("from"); }
 	function getTo(){ return $this->getHeader("to"); }
+
+	/**
+	 * Retrieves the "Date:" header and returns its value in ISO date and time format ("Y-m-d H:i:s"). It takes into account the currently set time zone.
+	 *
+	 * Returns NULL if the "Date:" header is missing.
+	 *
+	 * @return string|null
+	 */
 	function getDate(){
 		$date = $this->getHeader("date");
 		if(!$date){ return null; }
