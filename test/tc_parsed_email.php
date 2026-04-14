@@ -19,14 +19,16 @@ class TcParsedEmail extends TcBase {
 
 		$this->assertTrue(is_null(\Yarri\EmailParser\ParsedEmail::_CorrectFilename(null)));
 
-		$filename = str_repeat("á",120);
+		$filename = "1";
+		$filename .= str_repeat("á",119);
 		$filename .= ".png";
 		$this->assertEquals(124,mb_strlen($filename));
-		$this->assertEquals(244,strlen($filename));
+		$this->assertEquals(243,strlen($filename));
 		$filename_corrected = \Yarri\EmailParser\ParsedEmail::_CorrectFilename($filename);
 		$this->assertEquals(100,mb_strlen($filename_corrected));
-		$this->assertEquals(196,strlen($filename_corrected));
+		$this->assertEquals(195,strlen($filename_corrected));
 		$this->assertTrue(!!preg_match('/\.png/',$filename_corrected));
+		$this->assertTrue(!!preg_match('/^1/',$filename_corrected));
 	}
 
 	function test__IsPrivateIp(){

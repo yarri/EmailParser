@@ -387,8 +387,19 @@ class ParsedEmail {
 		if($filename===""){ $filename = "_"; }
 		if($filename==="."){ $filename = "_"; }
 		if($filename===".."){ $filename = "__"; }
-		if(mb_strlen($filename)>100){
-			$filename = mb_substr($filename,-100);
+
+		$max_length = 100;
+		if(mb_strlen($filename)>$max_length){
+			if(preg_match('/^(.*)\.([^.]{1,20})$/u',$filename,$matches)){
+				// With a regular suffix, the filename will be truncated from the begining
+				$basename = $matches[1];
+				$suffix = $matches[2];
+				$basename = mb_substr($basename,0,$max_length - (mb_strlen($suffix) + 1));
+				$filename = $basename.".".$suffix;
+			}else{
+				// Without regular suffix, the filename will be truncated from the end
+				$filename = mb_substr($filename,-$max_length);
+			}
 		}
 		return $filename;
 	}
