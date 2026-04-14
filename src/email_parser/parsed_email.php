@@ -362,12 +362,12 @@ class ParsedEmail {
 	}
 
 	static function _IsPrivateIp($ip){
-		// TODO: detect private IPv6 address
 		return
 			preg_match('/^10\./', $ip) ||
 			preg_match('/^192\.168\./', $ip) ||
 			preg_match('/^172\.(1[6-9]|2[0-9]|3[0-1])\./', $ip) ||
-			preg_match('/^127\./', $ip);
+			preg_match('/^127\./', $ip) ||
+			preg_match('/^(::1|fc|fd|fe80)/i', $ip);
 	}
 
 	static function _CorrectFilename($filename,$declared_charset = ""){

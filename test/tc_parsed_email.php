@@ -28,4 +28,25 @@ class TcParsedEmail extends TcBase {
 		$this->assertEquals(196,strlen($filename_corrected));
 		$this->assertTrue(!!preg_match('/\.png/',$filename_corrected));
 	}
+
+	function test__IsPrivateIp(){
+		foreach([
+			"127.0.0.1",
+			"10.10.0.1",
+			"192.168.1.1",
+			"fe80::42:74ff:fe05:a648",
+			"fd40:923a:0a2e:bca0::1",
+			"fd00::1"
+		] as $private_ip){
+			$this->assertTrue(\Yarri\EmailParser\ParsedEmail::_IsPrivateIp($private_ip));
+		}
+
+		foreach([
+			"8.8.8.8",
+			"2606:4700:20::ac43:4628",
+			"2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+		] as $public_ip){
+			$this->assertFalse(\Yarri\EmailParser\ParsedEmail::_IsPrivateIp($public_ip));
+		}
+	}
 }
