@@ -1,0 +1,12 @@
+To: jaromir.tomek@gmail.com
+Subject: Test
+From: "Jaromir Tomek" <yarri@listonos.cz>
+Reply-To: "Jaromir Tomek" <yarri@listonos.cz>
+Bcc: info@listonos.cz
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Return-Path: yarri@listonos.cz
+Date: Sun, 26 Apr 2026 13:56:23 GMT
+
+Test

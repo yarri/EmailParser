@@ -270,6 +270,8 @@ class ParsedEmail {
 	function getSubject(){ return $this->getHeader("subject"); }
 	function getFrom(){ return $this->getHeader("from"); }
 	function getTo(){ return $this->getHeader("to"); }
+	function getCc(){ return $this->getHeader("cc"); }
+	function getBcc(){ return $this->getHeader("bcc"); }
 
 	/**
 	 * Retrieves the "Date:" header and returns its value in ISO date and time format ("Y-m-d H:i:s"). It takes into account the currently set time zone.
