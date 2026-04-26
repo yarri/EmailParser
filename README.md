@@ -33,6 +33,8 @@ Usage
     $email->getSubject();
     $email->getFrom();
     $email->getTo();
+    $email->getCc();
+    $email->getBcc();
     $email->getDate(); // returns date in the ISO format (YYYY-mm-dd H:i:s) in the current timezone (set via date_default_timezone_set()); e.g. "2025-05-25 12:40:22"
     $email->getHeader("Date"); // e.g. "Sun, 25 May 2025 06:37:33 +0200 (CEST)"
     $email->getHeader("Return-Path");
