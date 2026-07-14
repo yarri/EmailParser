@@ -31,7 +31,9 @@ Usage
     
     // Getting headers
     $email->getSubject();
-    $email->getFrom();
+    $email->getFrom(); // e.g. "John Doe <john@example.com>"
+    $email->getFromEmail(); // e.g. "john@example.com"
+    $email->getFromName(); // e.g. "John Doe"
     $email->getTo();
     $email->getCc();
     $email->getBcc();
