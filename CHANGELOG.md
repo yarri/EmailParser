@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to EmailParser will be documented in this file.
 
+## [0.2.4] 2026-07-14
+
+* 2328be3 - Added methods ParsedEmail::getFromEmail() and ParsedEmail::getFromName()
+
 ## [0.2.3] 2026-04-26
 
 * f056b7e - Added methods ParsedEmail::getCc() and ParsedEmail::getBcc()
