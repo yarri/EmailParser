@@ -273,6 +273,20 @@ class ParsedEmail {
 	function getCc(){ return $this->getHeader("cc"); }
 	function getBcc(){ return $this->getHeader("bcc"); }
 
+	function getFromEmail(){
+		$ear = new \Yarri\EmailAddressRecognizer($this->getFrom());
+		if($ear->isValid()){
+			return $ear[0]->getAddress();
+		}
+	}
+
+	function getFromName(){
+		$ear = new \Yarri\EmailAddressRecognizer($this->getFrom());
+		if($ear->isValid()){
+			return $ear[0]->getName();
+		}
+	}
+
 	/**
 	 * Retrieves the "Date:" header and returns its value in ISO date and time format ("Y-m-d H:i:s"). It takes into account the currently set time zone.
 	 *

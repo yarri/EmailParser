@@ -8,6 +8,8 @@ class TcEmailParser extends TcBase {
 
 		$this->assertEquals('RE: Testovací zpráva (text/plain)',$email->getSubject());
 		$this->assertEquals('"Jaromir Tomek" <yarri@listonos.cz>',$email->getFrom());
+		$this->assertEquals("yarri@listonos.cz",$email->getFromEmail());
+		$this->assertEquals("Jaromir Tomek",$email->getFromName());
 		$this->assertEquals('yarri@listonos.cz',$email->getTo());
 		$this->assertEquals(null,$email->getCc());
 		$this->assertEquals(null,$email->getBcc());
