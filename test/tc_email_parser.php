@@ -444,4 +444,17 @@ by 10.114.91.199 with HTTP; Sun, 22 Dec 2013 14:02:37 -0800 (PST)',$email->getHe
 			"2002:a05:6358:d5aa:b0:1eb:a36e:6865"
 		],$ips);
 	}
+
+	function test_from_email_enclosed_in_angle_brackets(){
+		$parser = new Yarri\EmailParser();
+		$email = $parser->parse(trim('
+From: <klara@example.com>
+
+Body
+		'));
+
+		$this->assertEquals("<klara@example.com>",$email->getFrom());
+		$this->assertEquals("klara@example.com",$email->getFromEmail());
+		$this->assertEquals("",$email->getFromName());
+	}
 }
