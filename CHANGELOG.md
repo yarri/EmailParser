@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to EmailParser will be documented in this file.
 
+## [0.2.5] 2026-10-08
+
+* 1162aff - Fix - detecting email addresses only when they are enclosed in angle brackets
+
 ## [0.2.4] 2026-07-14
 
 * 2328be3 - Added methods ParsedEmail::getFromEmail() and ParsedEmail::getFromName()

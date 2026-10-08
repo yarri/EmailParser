@@ -3,7 +3,7 @@ namespace Yarri;
 
 class EmailParser {
 
-	const VERSION = "0.2.1";
+	const VERSION = "0.2.5";
 
 	function __construct(){
 	}
