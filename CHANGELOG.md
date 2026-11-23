@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to EmailParser will be documented in this file.
 
+## [0.2.6] 2026-11-23
+
+* 25fef4e - Add embed_inline_images option to render cid: images as base64 data URIs
+* d1485f3 - Include filename in embed_inline_images data URIs when available
+
 ## [0.2.5] 2026-10-08
 
 * 1162aff - Fix - detecting email addresses only when they are enclosed in angle brackets
