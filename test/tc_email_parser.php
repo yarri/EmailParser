@@ -204,6 +204,56 @@ class TcEmailParser extends TcBase {
 		$this->assertTrue(is_null($part));
 	}
 
+	function test_multipart_related_embed_inline_images_is_disabled_by_default(){
+		$email_content = Files::GetFileContent(__DIR__ . "/sample_emails/multipart_related.txt");
+
+		$parser = new Yarri\EmailParser();
+		$email = $parser->parse($email_content);
+
+		$html_part = $email->getFirstReadablePart(["prefer_html" => true]);
+
+		$html = $html_part->getContent();
+		$this->assertStringContains('src="cid:c1"',$html);
+		$this->assertStringContains('src="cid:c2"',$html);
+
+		$html = $html_part->getContent(["embed_inline_images" => false]);
+		$this->assertStringContains('src="cid:c1"',$html);
+		$this->assertStringContains('src="cid:c2"',$html);
+	}
+
+	function test_multipart_related_embed_inline_images(){
+		$email_content = Files::GetFileContent(__DIR__ . "/sample_emails/multipart_related.txt");
+
+		$parser = new Yarri\EmailParser();
+		$email = $parser->parse($email_content);
+
+		$html_part = $email->getFirstReadablePart(["prefer_html" => true]);
+		$html = $html_part->getContent(["embed_inline_images" => true]);
+
+		$this->assertStringNotContains("cid:c1",$html);
+		$this->assertStringNotContains("cid:c2",$html);
+
+		$image_c1 = $email->getPartByContentId("<c1>");
+		$image_c2 = $email->getPartByContentId("<c2>");
+
+		$this->assertStringContains(
+			'src="data:image/png;base64,'.base64_encode($image_c1->getContent()).'"',
+			$html
+		);
+		$this->assertStringContains(
+			'src="data:image/jpeg;base64,'.base64_encode($image_c2->getContent()).'"',
+			$html
+		);
+
+		// getContentBuffer() honours the same option
+		$buffer = $html_part->getContentBuffer(["embed_inline_images" => true]);
+		$this->assertStringNotContains("cid:",$buffer->toString());
+
+		// only applies to text/html parts
+		$image_content_via_option = $image_c1->getContent(["embed_inline_images" => true]);
+		$this->assertEquals($image_c1->getContent(),$image_content_via_option);
+	}
+
 	function test_subject_in_base64(){
 		$email_content = Files::GetFileContent(__DIR__ . "/sample_emails/subject_in_base64.txt");
 		$parser = new Yarri\EmailParser();

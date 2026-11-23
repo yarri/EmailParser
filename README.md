@@ -103,6 +103,16 @@ Usage
     $part->getMimeType(); // "image/png"
     $part->isAttachment(); // false (inline image inside multipart/related)
 
+    // Rendering an HTML part with its inline images (cid: references) embedded as base64 data URIs,
+    // so the HTML is self-contained and displays correctly even outside the context of the original email.
+    // Off by default - without this option "cid:xxx" references are left untouched.
+    $html_part = $email->getFirstReadablePart(["prefer_html" => true]);
+    echo $html_part->getContent(["embed_inline_images" => true]);
+    // <img src="cid:unique-image-001@example.com"> becomes <img src="data:image/png;base64,...">
+    //
+    // $html_part->getContentBuffer(["embed_inline_images" => true]) works the same way.
+    // The option has no effect on parts other than text/html.
+
     // Email sent as an attachment
     $email = $parser->parseFile("/path/to/email_with_message_rfc822_part.eml");
 

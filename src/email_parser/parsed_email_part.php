@@ -39,8 +39,8 @@ class ParsedEmailPart {
 		return $this->struct["name"];
 	}
 
-	function getContent(){
-		$buffer = $this->getContentBuffer();
+	function getContent($options = []){
+		$buffer = $this->getContentBuffer($options);
 		return $buffer->toString();
 	}
 
@@ -51,18 +51,49 @@ class ParsedEmailPart {
 	 *	header("Content-Type: ".$buffer->getMimeType());
 	 *	$buffer->printOut();
 	 *
+	 * Options:
+	 *	embed_inline_images: for a text/html part, rewrites "cid:xxx" references
+	 *	(eg. <img src="cid:c1">) to "data:<mime-type>;base64,..." URIs resolved from
+	 *	sibling parts sharing that Content-ID, so the HTML is self-contained and
+	 *	renders inline images without a separate request for each one. Off by default.
+	 *
 	 * @return \StringBuffer
 	 */
-	function getContentBuffer(){
+	function getContentBuffer($options = []){
+		$options += [
+			"embed_inline_images" => false,
+		];
+
 		$buffer = new \StringBuffer();
 		if(!$this->struct["has_content"]){ return $buffer; }
 		if(!$this->struct["body_included"]){
 			$filename = $this->email->_getCacheFilenameForPart($this->getId());
 			$buffer->addFile($filename);
+		}else{
+			$buffer->addString($this->struct["body"]);
+		}
+
+		if(!$options["embed_inline_images"] || $this->getMimeType()!=="text/html"){
 			return $buffer;
 		}
-		$buffer->addString($this->struct["body"]);
-		return $buffer;
+
+		$out = new \StringBuffer();
+		$out->addString($this->_embedInlineImages($buffer->toString()));
+		return $out;
+	}
+
+	function _embedInlineImages($html){
+		$email = $this->email;
+		return preg_replace_callback(
+			'/(["\'(])cid:([^"\'()\s]+)(["\')])/',
+			function($matches) use($email){
+				list(,$prefix,$cid,$suffix) = $matches;
+				$part = $email->getPartByContentId("<$cid>");
+				if(!$part){ return $matches[0]; }
+				return $prefix."data:".$part->getMimeType().";base64,".base64_encode($part->getContent()).$suffix;
+			},
+			$html
+		);
 	}
 
 	function getSize(){
