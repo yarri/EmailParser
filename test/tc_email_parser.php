@@ -237,11 +237,11 @@ class TcEmailParser extends TcBase {
 		$image_c2 = $email->getPartByContentId("<c2>");
 
 		$this->assertStringContains(
-			'src="data:image/png;base64,'.base64_encode($image_c1->getContent()).'"',
+			'src="data:image/png;name='.rawurlencode($image_c1->getFilename()).';base64,'.base64_encode($image_c1->getContent()).'"',
 			$html
 		);
 		$this->assertStringContains(
-			'src="data:image/jpeg;base64,'.base64_encode($image_c2->getContent()).'"',
+			'src="data:image/jpeg;name='.rawurlencode($image_c2->getFilename()).';base64,'.base64_encode($image_c2->getContent()).'"',
 			$html
 		);
 

@@ -55,7 +55,9 @@ class ParsedEmailPart {
 	 *	embed_inline_images: for a text/html part, rewrites "cid:xxx" references
 	 *	(eg. <img src="cid:c1">) to "data:<mime-type>;base64,..." URIs resolved from
 	 *	sibling parts sharing that Content-ID, so the HTML is self-contained and
-	 *	renders inline images without a separate request for each one. Off by default.
+	 *	renders inline images without a separate request for each one. When the
+	 *	resolved part has a filename, it's included as "data:<mime-type>;name=<filename>;base64,...".
+	 *	Off by default.
 	 *
 	 * @return \StringBuffer
 	 */
@@ -90,7 +92,8 @@ class ParsedEmailPart {
 				list(,$prefix,$cid,$suffix) = $matches;
 				$part = $email->getPartByContentId("<$cid>");
 				if(!$part){ return $matches[0]; }
-				return $prefix."data:".$part->getMimeType().";base64,".base64_encode($part->getContent()).$suffix;
+				$name_param = strlen((string)$part->getFilename()) ? ";name=".rawurlencode($part->getFilename()) : "";
+				return $prefix."data:".$part->getMimeType().$name_param.";base64,".base64_encode($part->getContent()).$suffix;
 			},
 			$html
 		);

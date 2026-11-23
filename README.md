@@ -109,6 +109,7 @@ Usage
     $html_part = $email->getFirstReadablePart(["prefer_html" => true]);
     echo $html_part->getContent(["embed_inline_images" => true]);
     // <img src="cid:unique-image-001@example.com"> becomes <img src="data:image/png;base64,...">
+    // If the inline part has a filename, it's included too: "data:image/png;name=photo.png;base64,...".
     //
     // $html_part->getContentBuffer(["embed_inline_images" => true]) works the same way.
     // The option has no effect on parts other than text/html.
